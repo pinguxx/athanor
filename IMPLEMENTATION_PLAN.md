@@ -65,13 +65,13 @@ flowchart TD
   - [x] 3.7 Phase 3 Test: Infinite loop execution halted in $<15$ ms
   - [x] 3.8 Verify Phase 3: `cargo test -p rubedo-alembic`
 
-- [ ] **Phase 4: Bidirectional Model Context Protocol (MCP) Gateway**
-  - [ ] 4.1 `rubedo-mcp` crate scaffolding with JSON-RPC 2.0 primitives
-  - [ ] 4.2 Transport abstractions: stdio and Server-Sent Events (SSE)
-  - [ ] 4.3 `McpClient` implementation: tool discovery (`tools/list`) and dynamic `Reagent` synthesis
-  - [ ] 4.4 `McpServer` implementation: native Reagent registry exposure and `tools/call` invocation handler
-  - [ ] 4.5 Phase 4 In-Memory Duplex Test: McpServer exposes native tool, McpClient discovers & executes it
-  - [ ] 4.6 Verify Phase 4: `cargo test -p rubedo-mcp`
+- [x] **Phase 4: Bidirectional Model Context Protocol (MCP) Gateway**
+  - [x] 4.1 `rubedo-mcp` crate scaffolding with JSON-RPC 2.0 primitives
+  - [x] 4.2 Transport abstractions: stdio and in-memory duplex channels
+  - [x] 4.3 `McpClient` implementation: tool discovery (`tools/list`) and dynamic `Reagent` synthesis
+  - [x] 4.4 `McpServer` implementation: native Reagent registry exposure and `tools/call` invocation handler
+  - [x] 4.5 Phase 4 In-Memory Duplex Test: McpServer exposes native tool, McpClient discovers & executes it
+  - [x] 4.6 Verify Phase 4: `cargo test -p rubedo-mcp`
 
 - [ ] **Phase 5: Spagyric In-Process Vector Store (RAG)**
   - [ ] 5.1 `rubedo-rag` crate scaffolding with `fastembed` and `lancedb`
