@@ -1,0 +1,23 @@
+{
+  "code-task-auditor": {
+    "PostToolUse": [
+      {
+        "matcher": "write_file|edit_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File ./hooks/post_code_task_hook.ps1",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "powershell -ExecutionPolicy Bypass -File ./hooks/on_stop_hook.ps1",
+        "timeout": 30
+      }
+    ]
+  }
+}
