@@ -55,15 +55,15 @@ flowchart TD
   - [x] 2.9 Phase 2 Integration Test (3-step workflow suspension & resumption)
   - [x] 2.10 Verify Phase 2: `cargo test -p rubedo-crucible -p rubedo-opus`
 
-- [ ] **Phase 3: Alembic WASM Sandbox Runtime**
-  - [ ] 3.1 `rubedo-alembic` crate scaffolding with `wasmtime` and `wasmtime-wasi`
-  - [ ] 3.2 `AlembicConfig` definition (`max_memory_bytes`, `fuel_limit`)
-  - [ ] 3.3 `AlembicSandbox` engine initialization with fuel metering enabled
-  - [ ] 3.4 Host-guest linear memory bridge (JSON payload exchange protocol)
-  - [ ] 3.5 Dynamic `WasmReagent` wrapper implementing `rubedo_core::Reagent`
-  - [ ] 3.6 Fuel exhaustion & memory limit abort handling
-  - [ ] 3.7 Phase 3 Test: Infinite loop execution halted in $<15$ ms
-  - [ ] 3.8 Verify Phase 3: `cargo test -p rubedo-alembic`
+- [x] **Phase 3: Alembic WASM Sandbox Runtime**
+  - [x] 3.1 `rubedo-alembic` crate scaffolding with `wasmtime` and `wasmtime-wasi`
+  - [x] 3.2 `AlembicConfig` definition (`max_memory_bytes`, `fuel_limit`)
+  - [x] 3.3 `AlembicSandbox` engine initialization with fuel metering enabled
+  - [x] 3.4 Host-guest linear memory bridge (JSON payload exchange protocol)
+  - [x] 3.5 Dynamic `WasmReagent` wrapper implementing `rubedo_core::Reagent`
+  - [x] 3.6 Fuel exhaustion & memory limit abort handling
+  - [x] 3.7 Phase 3 Test: Infinite loop execution halted in $<15$ ms
+  - [x] 3.8 Verify Phase 3: `cargo test -p rubedo-alembic`
 
 - [ ] **Phase 4: Bidirectional Model Context Protocol (MCP) Gateway**
   - [ ] 4.1 `rubedo-mcp` crate scaffolding with JSON-RPC 2.0 primitives
