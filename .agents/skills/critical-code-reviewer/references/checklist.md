@@ -1,78 +1,78 @@
-# 🔬 50-Point Adversarial Review Checklist
+# 🔬 50-Point Rubedo Adversarial Review Checklist
 
-This checklist provides deep-inspection questions across five mission-critical engineering domains.
+This checklist provides deep-inspection questions across five mission-critical engineering domains for the **Rubedo** agentic framework.
 
 ---
 
-## 1. Rust & Backend Systems (10 Points)
+## 1. Rust Primitives & Macro Synthesizers (10 Points)
 
-1. **Panic Freedom**: Does the code contain any unvalidated `.unwrap()`, `.expect()`, `panic!()`, or unreachable branches that could be triggered by malformed user input?
-2. **Bounds & Slicing**: Are array indices (`slice[i]`) guarded against `IndexOutOfBounds`? Are range operations (`slice[start..end]`) checked?
-3. **Integer Arithmetic**: Can arithmetic (`+`, `-`, `*`) overflow or divide by zero under extreme values? (Use `checked_add`, `saturating_add`, or explicit bounds checking).
+1. **Zero Lifetime Annotations**: Do public macros (`#[reagent]`, `opus!`, `artificer!`) mandate `'static + Send + Sync` using owned value transfers and `Arc` envelopes, eliminating all lifetime annotations for autonomous agent authoring?
+2. **Panic Freedom**: Does the code contain any unvalidated `.unwrap()`, `.expect()`, `panic!()`, or unreachable branches in non-test crate paths?
+3. **Integer & Float Arithmetic**: Can token counters, budget meters, or step counters overflow or divide by zero? (Use `saturating_add` or checked arithmetic).
 4. **Lock Scope & Concurrency**: Are `std::sync::Mutex` or `tokio::sync::RwLock` guards held across `.await` points or over lengthy I/O operations?
-5. **Async Runtime Blocking**: Are CPU-intensive loops or synchronous I/O executed inside an async task without `spawn_blocking`?
-6. **Error Propagation**: Are errors properly surfaced using `?` and typed error enums (`Result<T, AppError>`), or are errors swallowed silently with `let _ = ...`?
-7. **Resource Cleanup**: Are file descriptors, database connections, and sockets guaranteed to release on early-return or error exit?
-8. **Clone & Allocation Overhead**: Are heavy structures cloned unnecessarily in hot loops instead of borrowing (`&str`, `&[T]`, `Cow`)?
-9. **Deadlock Vulnerability**: If multiple locks are acquired, are they consistently acquired in a fixed, global order across all threads?
-10. **Trait Invariants**: Do custom implementations of `PartialEq`, `Eq`, `Hash`, or `Ord` uphold mathematical equivalence invariants?
+5. **Async Runtime Blocking**: Are CPU-intensive operations (WASM compilation, embedding generation, text splitting) spawned on `tokio::task::spawn_blocking` rather than blocking worker threads?
+6. **Error Propagation**: Are all errors classified using the `ReagentError` hierarchy (`InvalidInput`, `Recoverable` with guidance, `Fatal`) or derived from `thiserror::Error`?
+7. **Resource Cleanup**: Are SQLite connection handles, file descriptors, and WASM memory buffers guaranteed to release on early-return or error exit?
+8. **Clone & Allocation Overhead**: Are heavy AST nodes, JSON payloads, or vector buffers cloned unnecessarily in hot loops?
+9. **AST Parsing Edge Cases**: Does `syn` parsing in `rubedo-macros` gracefully handle empty parameter lists, doc comments, optional types, and edge-case identifiers?
+10. **Trait Invariants**: Do custom implementations of `Reagent` and `Vessel` uphold `'static + Send + Sync` contracts under all generics?
 
 ---
 
-## 2. Security & Threat Modeling (10 Points)
+## 2. Durable Workflows & SQLite Event Sourcing (10 Points)
 
-11. **BOLA / IDOR**: Does every handler fetching or modifying an object by ID verify that the requesting user has explicit authorization to access *that specific* object?
-12. **Injection Defense**: Are SQL queries strictly parameterized? Are user inputs passed to system commands, regex engines, or shell interpreters?
-13. **SSRF Neutralization**: Are URLs supplied by users validated to forbid loopback (`127.0.0.1`, `localhost`, `[::1]`), cloud metadata services (`169.254.169.254`), and private networks (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`)?
-14. **Cross-Site Scripting (XSS)**: Is untrusted HTML, markdown, or SVG sanitized with strict tag/attribute allowlists before rendering?
-15. **Cross-Site Request Forgery (CSRF)**: Are mutation endpoints protected by CSRF tokens or `SameSite=Strict/Lax` cookies with `Authorization` headers?
-16. **Token & Session Hygiene**: Are JWTs signed with robust algorithms (e.g., HS256/RS256), validated for expiration (`exp`), and revoked on logout?
-17. **Rate Limiting & DoS**: Are expensive endpoints (authentication, file upload, search, AI synthesis) protected by sliding-window rate limiters?
-18. **Payload Limits**: Are request body sizes clamped to prevent memory exhaustion from oversized payloads?
-19. **Information Leakage**: Do error responses reveal stack traces, internal database schema details, or server directory paths?
-20. **Autofill Bleed**: Do modal password fields isolate themselves with `autoComplete="new-password"`, unique names, and `type="search"` on search bars to prevent browser credential contamination?
-
----
-
-## 3. React & Frontend State Management (10 Points)
-
-21. **Stale Closures**: In `useEffect`, `useCallback`, and event handlers, are all referenced state and props present in the dependency array?
-22. **Uncontrolled Re-render Cascades**: Does state update at the root trigger unnecessary re-renders of the entire feed or heavy component trees?
-23. **Modal & Backdrop Event Isolation**: Does opening a modal debounce backdrop clicks to prevent double-click self-dismissal? Do modal buttons have `type="button"` and `e.stopPropagation()`?
-24. **History & Navigation Sync**: When using URL hashes or history states (`pushState`, `popstate`), can navigating back drop the user into an unintended view or desynchronize UI filters?
-25. **Memory Leak Hygiene**: Are all event listeners, intervals (`setInterval`), timeouts (`setTimeout`), and WebSocket connections cleanly removed in `useEffect` cleanup return functions?
-26. **Accessibility (a11y)**: Do interactive elements have appropriate ARIA attributes (`role="tab"`, `aria-selected`, `aria-label`), keyboard navigation (`Escape`, `Tab`), and visible focus rings?
-27. **Input Debouncing**: Are live search boxes, autosuggestions, and filter queries debounced to avoid hammering state updates or API backends?
-28. **Type Safety & `any`**: Are TypeScript types strictly defined without falling back to `any` or blind type assertions (`as unknown as T`)?
-29. **Error Boundaries**: Are subtrees (especially complex widgets, markdown parsers, or charts) isolated inside React Error Boundaries so a component render crash doesn't unmount the whole application?
-30. **Offline & Degraded States**: Does the frontend gracefully inform the user when offline or when a backend service returns a 503 Maintenance state?
+11. **Atomic Checkpointing**: Is every Vessel execution transition (pre-execution snapshot, post-execution result) wrapped in an atomic SQLite transaction in `rubedo-crucible`?
+12. **Resume Token Entropy**: Are resume tokens minted using cryptographically secure UUIDv4 strings rather than sequential or guessable identifiers?
+13. **Single-Use Token Invariant**: Is a resume token atomically consumed from `suspended_tokens` upon invocation of `OpusEngine::resume()`, preventing double-resumption replay attacks?
+14. **State Deserialization Safety**: Is workflow state JSON deserialized safely with strict schema validation, rejecting malformed historical snapshots?
+15. **DAG Cycle Prevention**: Does `OpusBuilder` validate that workflow topologies are strictly directed and acyclic before allowing execution?
+16. **Crash-Recovery Consistency**: If the host process is terminated abruptly during step execution, does `CrucibleEngine` leave the database in a cleanly recoverable state?
+17. **Migration Versioning**: Are SQLite database schema migrations embedded using `sqlx::migrate!()` with explicit backward compatibility?
+18. **Time-Travel Safety**: Can past Vessel events be replayed without side-effect mutations affecting unrelated active runs?
+19. **Index Coverage**: Are query filters (`run_id`, `vessel_id`, `token`) backed by SQLite indexes to prevent table scans under heavy event volume?
+20. **Payload Size Clamping**: Are step payload sizes bounded to prevent SQLite database bloat or memory exhaustion during event loading?
 
 ---
 
-## 4. API Design & Data Persistence (10 Points)
+## 3. Sandboxed WASM Isolation & Host-Guest Memory (10 Points)
 
-31. **Idempotency**: Can mutating actions (payments, voting, publishing, status changes) be safely retried without creating duplicate records or billing?
-32. **Pagination & Limits**: Are list endpoints explicitly paginated with sensible default and maximum page sizes (e.g., max 50 items)?
-33. **Schema Migrations**: Are database schema migrations backwards-compatible with running application versions (expand/contract pattern)?
-34. **Index Coverage**: Are query filters (`WHERE`, `ORDER BY`, `JOIN`) backed by database indexes to prevent table scans?
-35. **Cache Invalidation**: When an entity is updated, are all associated cache keys (Redis, CDN, in-memory) invalidated atomically?
-36. **Serialization Consistency**: Do serialization names (`snake_case` vs `camelCase`) match across frontend TypeScript interfaces and backend Rust structs?
-37. **Timezone Uniformity**: Are all timestamps stored and transferred in UTC ISO-8601 format (`YYYY-MM-DDTHH:mm:ssZ`)?
-38. **Atomic Transactions**: Are multi-step database mutations wrapped inside transactions to prevent partial updates upon failure?
-39. **Stateless Scalability**: Does the application server store session state in external stores (Redis/DB) rather than in-memory process globals?
-40. **Health & Readiness Probes**: Are `/health` and `/ready` endpoints lightweight and validating actual downstream connectivity?
+21. **Fuel Metering Enforcement**: Does `AlembicSandbox` mandate instruction fuel consumption on all executions, aborting infinite loops within $<15$ms?
+22. **Linear Memory Ceilings**: Is the guest WASM memory strictly bounded (e.g. max 64MB) to prevent guest modules from consuming all host RAM?
+23. **Zero-Access WASI**: Are filesystem, network sockets, and environment variables excluded by default from the WASI context?
+24. **Guest Buffer Bounds Checking**: Does the host memory exchange reader strictly validate guest pointer and length offsets before reading linear memory?
+25. **Host Panic Immunity**: If a guest WASM module traps (`unreachable`, stack overflow, memory out-of-bounds), does the host gracefully return `AlembicError::Trap` without crashing?
+26. **Deterministic Aborts**: Are fuel exhaustion errors explicitly categorized as recoverable or fatal based on caller configuration?
+27. **Module Compilation Caching**: Are frequently invoked WASM modules compiled once and shared across stores rather than recompiled per invocation?
+28. **Thread Safety of Sandbox**: Is `AlembicSandbox` safe to share across threads (`Send + Sync + 'static`)?
+29. **Reagent Trait Parity**: Does `WasmReagent` implement the full `rubedo_core::reagent::Reagent` contract faithfully?
+30. **No Unaudited Unsafe**: Is all memory pointer manipulation inside `rubedo-alembic` thoroughly audited with explicit `// SAFETY` justification comments?
 
 ---
 
-## 5. Testing & Verification Rigor (10 Points)
+## 4. MCP Gateway & Interoperability Boundaries (10 Points)
 
-41. **Failure Path Coverage**: Do automated tests assert error responses (e.g., 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found), not just 200 OK happy paths?
-42. **Boundary Testing**: Are tests verifying edge values: 0, 1, empty strings, max integer, strings with unicode/emojis, whitespace-only?
-43. **Concurrency Stress**: Are race conditions tested with concurrent requests (e.g., double-voting, rapid sequential checkout)?
-44. **Mock Authenticity**: Do test mocks accurately reflect real service behaviors, status codes, and error formats?
-45. **Deterministic Results**: Are tests free of race conditions, hardcoded sleep timeouts (`sleep(500)`), or dependencies on external live network services?
-46. **Sanitization Testing**: Are XSS polyglots and malicious strings included in test suites to verify escaping?
-47. **Regression Guard**: Is every bug fix accompanied by a regression test replicating the exact reported failure?
-48. **Lint & Formatting Zero-Tolerance**: Does the PR pass `cargo clippy -- -D warnings` and `npm run lint` with zero warnings?
-49. **Clean Build Verification**: Does `npm run build` and `cargo test` complete cleanly with zero build errors?
-50. **No Prohibited Terminology**: Does the codebase strictly maintain branding, compliance, and terminology constraints without forbidden artifacts?
+31. **JSON-RPC 2.0 Compliance**: Does `rubedo-mcp` strictly follow the JSON-RPC 2.0 specification for requests, responses, notifications, and error codes?
+32. **Tool Schema Parity**: Does `McpServer` expose the exact JSON Schema generated by `schemars` from internal `Reagent` instances?
+33. **Remote Tool Sanitization**: Does `McpClient` validate remote MCP tool definitions before wrapping them as native `dyn Reagent` instances?
+34. **Channel Transport Isolation**: Does stdio transport handle newline framing, buffer flushes, and EOF cleanly without hanging the process?
+35. **SSE Transport Disconnects**: Does Server-Sent Events transport detect client disconnects and cleanly reclaim resources?
+36. **Input Type Coercion**: Are input parameters validated against the declared JSON Schema before invoking `reagent.transmute()`?
+37. **Error Masking**: Do internal server errors avoid leaking host file system paths or database credentials to remote MCP clients?
+38. **Deadlock-Free Duplex**: Are duplex communications between McpClient and McpServer free of lock-step buffering deadlocks?
+39. **Timeouts on Remote Calls**: Are external MCP tool invocations protected by configurable execution timeouts?
+40. **Concurrent Invocations**: Can multiple MCP clients invoke distinct reagents concurrently without cross-contamination?
+
+---
+
+## 5. Atelier Visualizer, RAG & Testing Rigor (10 Points)
+
+41. **Single-Binary Asset Embedding**: Are frontend UI assets bundled cleanly via `rust-embed` with correct MIME types and fallback routing?
+42. **SSE Broadcast Channel Backpressure**: Does the Tokio broadcast channel in `rubedo-atelier` handle lagging subscribers gracefully without crashing the server?
+43. **In-Process RAG Footprint**: Does `rubedo-rag` maintain an idle memory footprint $<40$MB using `fastembed-rs` and embedded `lancedb`?
+44. **Semantic Chunking Consistency**: Do text splitters maintain chunk overlap and avoid cutting markdown code blocks or table headers midway?
+45. **Failure Path Coverage**: Do automated tests assert error responses (e.g. `InvalidInput`, `Recoverable`, `FuelExhausted`), not just happy paths?
+46. **Regression Guard**: Is every bug fix accompanied by a regression test replicating the exact reported failure?
+47. **Lint & Formatting Zero-Tolerance**: Does the PR pass `cargo clippy --workspace --all-targets -- -D warnings` with zero warnings?
+48. **Clean Documentation**: Does `cargo doc --workspace --no-deps` compile without broken links or missing docs?
+49. **Coverage Threshold**: Does `cargo llvm-cov --workspace` verify $\ge 80\%$ line coverage across all non-test code?
+50. **No Prohibited Panics**: Does the workspace strictly forbid unhandled panics and adhere to the Alchemical Lexicon?

@@ -1,48 +1,45 @@
-# ⚖️ Severity Classification Rubric
+# ⚖️ Severity Classification Rubric for Rubedo
 
-Use this standardized rubric to ensure consistent, objective classification of code review findings.
+Use this standardized rubric to ensure consistent, objective classification of code review findings across the **Rubedo** agentic framework.
 
 ---
 
 ## 🔴 BLOCKER (P0 / Critical)
-**Criteria**: Code that compromises security, causes data corruption, crashes the service, or introduces non-recoverable regressions. **Merge is blocked until resolved.**
+**Criteria**: Code that compromises security, causes state corruption, crashes the agent runtime, or violates core architectural tenets. **Merge is blocked until resolved.**
 
 ### Concrete Examples:
-- SQL injection, command injection, unescaped XSS vulnerability.
-- Server-Side Request Forgery (SSRF) allowing internal network or cloud metadata access.
-- Authentication or authorization bypass (e.g., IDOR / BOLA allowing any user to edit another user's post).
-- Panic on untrusted input in Rust (`.unwrap()`, out-of-bounds slice indexing).
-- Unhandled Promise rejection or React component render crash that takes down the entire application.
-- Data race or deadlock condition under concurrent access.
+- Lifetime annotations in public macros (`#[reagent]`, `opus!`), violating Tenet 1 (Zero Lifetime Annotations).
+- Panic on untrusted input in Rust (`.unwrap()`, `.expect()`, out-of-bounds slice indexing) in non-test crates.
+- Memory leak or unmetered execution in WASM sandbox (missing fuel checks in `AlembicSandbox`).
+- Resume token forgery or non-atomic token consumption in `CrucibleEngine`.
+- Lock guard (`Mutex`, `RwLock`) held across `.await` points, causing thread pool deadlocks.
 - Plaintext credential, secret, or private key hardcoded into source or committed to Git.
-- Violation of non-negotiable project commitments or core quality gates (e.g., failing backend tests, prohibited terminology).
+- Failing workspace tests or compiler/clippy warnings: `cargo clippy --workspace --all-targets -- -D warnings`.
 
 ---
 
 ## 🟠 MAJOR (P1 / High)
-**Criteria**: Flaws in architecture, performance, error handling, or state synchronization that impair system reliability, scalability, or user experience. **Resolution strongly required prior to release.**
+**Criteria**: Flaws in architecture, performance, error handling, or state synchronization that impair agent reliability, scalability, or developer experience. **Resolution strongly required prior to release.**
 
 ### Concrete Examples:
-- Unindexed database queries or $O(N^2)$ in-memory loops over potentially unbounded collections.
-- Stale closures or missing dependencies in `useEffect` causing state desynchronization.
-- Missing input validation on public endpoints (e.g., negative duration, title > 10,000 chars).
-- Unhandled network error states or silent error swallowing (`catch {}` without logging or UI notification).
-- Browser autofill credential bleed (e.g., password manager injecting passwords into search inputs).
-- Memory leak hazards: Event listeners, intervals, or WebSocket connections not removed on component unmount.
-- Lack of transaction boundaries across multi-table mutating operations.
+- Unindexed SQLite queries or $O(N^2)$ in-memory loops over potentially unbounded event logs.
+- Missing schema validation on tool inputs before calling `reagent.transmute()`.
+- Unhandled error states or silent error swallowing (`let _ = ...` without logging or telemetry event).
+- Missing SQLite transaction boundaries across multi-table mutating operations in `CrucibleEngine`.
+- Memory growth in long-running agent loops due to unbounded `AthanorContext` message accumulation without trimming.
+- External infrastructure dependency added (e.g., PostgreSQL, Redis), violating Tenet 5.
 
 ---
 
 ## 🟡 MINOR (P2 / Medium)
-**Criteria**: Code smells, non-critical edge cases, type safety degradation, or missing test coverage that does not break the core user flow but reduces maintainability and robustness.
+**Criteria**: Code smells, non-critical edge cases, type safety degradation, or missing test coverage that reduces maintainability and robustness.
 
 ### Concrete Examples:
-- TypeScript `any` or loose type assertions (`as unknown as TargetType`).
-- Missing unit tests for edge-case boundaries (e.g., empty lists, single-item collections).
-- Suboptimal re-rendering of large lists due to missing `React.memo` or unstable callback references.
-- Accessibility gaps (e.g., missing `aria-label` on icon-only buttons, poor contrast on secondary badges).
-- Repetitive boilerplate that should be abstracted into a reusable utility.
-- Missing docstrings on public APIs or non-obvious algorithms.
+- Missing unit tests for edge-case boundaries (e.g., zero-parameter reagents, empty query strings).
+- Suboptimal allocations or unnecessary clones of JSON Values in hot execution paths.
+- Accessibility gaps in Atelier UI (e.g., missing `aria-label` on icon-only buttons).
+- Missing docstrings on public APIs or non-obvious procedural macro AST parsing steps.
+- Inconsistent naming conventions across crate boundaries.
 
 ---
 
@@ -51,6 +48,6 @@ Use this standardized rubric to ensure consistent, objective classification of c
 
 ### Concrete Examples:
 - Minor variable or function naming improvements for enhanced clarity.
-- Using idiomatic language constructs (e.g., `if let Some(x)` vs `match`, or optional chaining `?.`).
-- Typo corrections in internal comments or log messages.
-- Ordering of import statements or structuring of CSS classes.
+- Using idiomatic language constructs (e.g., `if let Some(x)` vs `match`).
+- Typo corrections in internal comments or docstrings.
+- Ordering of import statements or structuring of helper modules.

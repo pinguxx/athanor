@@ -1,38 +1,37 @@
-# Technology & Systems Catalog
+# Alchemical Systems Engineering Catalog
 
-Curated technical observations, empirical trade-offs, and engineering theses for the `tech-curator` skill.
-
----
-
-## 1. Embedded SQLite vs. Distributed Microservice Sprawl
-- **The Thesis**: 95% of software products never exceed 100 queries per second, yet their architectures look like Netflix in 2018.
-- **The Reality**: Modern PCI-e 4.0/5.0 NVMe drives sustain $>7,000\text{ MB/s}$ read speeds and hundreds of thousands of random IOPS. A single SQLite instance in Write-Ahead Logging (WAL) mode embedded directly inside a compiled Rust or Go process avoids network serialization, TCP handshakes, TLS termination, and inter-service authentication tokens.
-- **The Tradeoff**: Distributed databases are mandatory for multi-region active-active writes; for everything else, they primarily generate cloud vendor bills.
+A curated reference catalog of foundational systems engineering themes, architectural tradeoffs, and performance analyses guiding the **Rubedo** framework.
 
 ---
 
-## 2. Sensor Area Physics vs. Computational Photography
-- **The Thesis**: Software algorithms can denoise, tone-map, and synthetic-aperture blur, but they cannot manufacture photons that never hit the silicon.
-- **The Reality**: A $35\text{mm}$ full-frame sensor has an area of $864\text{ mm}^2$, compared to $\approx 60\text{ mm}^2$ on a modern flagship smartphone ($14.4\times$ light gathering surface). The signal-to-noise ratio (SNR) is governed by Poisson photon shot noise $\sqrt{N}$. When illumination drops, computational photography inevitably invents high-frequency texture through hallucination or over-smooths subtle gradations.
-- **The Tradeoff**: The best camera is the one you have with you; but physics remains undefeated in low-light dynamic range.
+## 1. Embedded SQLite vs Distributed Microservices
+- **Core Thesis**: Running SQLite in write-ahead log (WAL) mode embedded directly in a compiled Rust binary easily processes 80,000+ reads/sec with sub-millisecond $p99$ latencies on modern NVMe drives.
+- **Complexity Penalty**: Replacing embedded SQLite with a Kubernetes cluster running Postgres, Redis, and a Kafka message bus increases operational attack surface by $10\times$ and latency by $5\times$ to $20\times$ due to network serialization and TCP handshakes.
+- **Rubedo Application**: `rubedo-crucible` uses embedded SQLite via `sqlx` to provide event-sourced durability, pause/resume checkpointing, and time-travel replay without external infrastructure.
 
 ---
 
-## 3. Local Quantized SLMs (3B–8B) vs. Cloud Mega-LLMs
-- **The Thesis**: Using a 400B parameter cloud API to parse a JSON payload or extract three entities is computational absurdity.
-- **The Reality**: Modern 4-bit (AWQ / GGUF) quantized 3B–8B models (e.g. Llama-3.2, Qwen-2.5) run on consumer Apple Silicon unified memory or a modest laptop GPU at $>60\text{ tokens/sec}$ with zero network latency, zero cloud egress costs, and absolute data privacy.
-- **The Tradeoff**: Complex multi-step frontier reasoning still demands massive parameter scale, but structured operational tasks belong on the edge.
+## 2. In-Process WASM Isolation vs Heavyweight Docker Containers
+- **Core Thesis**: Spin-up latency for a Linux container is 200–800ms with a baseline 50MB+ memory overhead per container. In contrast, an in-process Wasmtime WebAssembly instance instantiates in $<1$ms with a sub-megabyte memory footprint.
+- **Instruction Fuel Tracking**: Wasmtime enables instruction-level fuel metering, deterministically terminating infinite loops and CPU-hog attacks in $<15$ms without OS thread killing.
+- **Rubedo Application**: `rubedo-alembic` isolates untrusted and model-generated Reagents in WebAssembly envelopes with 64MB memory caps and 100M instruction fuel limits.
 
 ---
 
-## 4. Memory Safety & Cache Locality
-- **The Thesis**: High throughput in modern CPUs is primarily memory-bound, not ALU-bound.
-- **The Reality**: L1 cache latency is $\approx 1\text{ ns}$ (4 cycles); main RAM access is $50\text{--}80\text{ ns}$ (200+ cycles). Garbage-collected languages with object pointer indirection (AoS) cause the CPU prefetcher to stall constantly on cache misses. Struct-of-Arrays (SoA) memory layouts and zero-cost compile-time ownership tracking (Rust borrow checker) maximize cache line utilization and eliminate stop-the-world latency spikes.
-- **The Tradeoff**: Developer cognitive load during compilation vs runtime predictability and memory efficiency.
+## 3. Zero Lifetime Annotations & Autonomous Code Generation
+- **Core Thesis**: Rust's borrow checker guarantees memory safety without garbage collection, but complex lifetime parameters (`'a`, `'b: 'a`) are notorious for causing compiler errors when code is synthesized dynamically by LLMs.
+- **Value Semantics & Arc Envelopes**: Designing macro synthesizers around owned value transfers (`serde_json::Value`) and thread-safe envelopes (`Arc<T>`, `'static + Send + Sync`) completely eliminates lifetime annotations from consumer code while preserving 100% memory safety.
+- **Rubedo Application**: `rubedo-macros` (`#[reagent]`) synthesizes JSON Schema and input structures without requiring a single lifetime parameter.
 
 ---
 
-## 5. Hall-Effect Magnetic Switches vs. Mechanical Leaves
-- **The Thesis**: Physical copper leaf contacts in keyboards are fundamentally prone to oxidation, chatter, and fixed physical actuation points.
-- **The Reality**: Hall-effect sensors measure the continuous magnetic flux of a rare-earth magnet attached to the key stem. This unlocks rapid trigger (resetting actuation the instant the key ascends by $0.1\text{ mm}$), dynamic multi-stage actuations, and zero contact bouncing.
-- **The Tradeoff**: Analog sensor power draw and calibration tolerances vs superior physical responsiveness.
+## 4. In-Process Vector Embeddings (<40MB) vs Cloud Vector Databases
+- **Core Thesis**: Small, specialized embedding models (e.g. `BGESmallENV15`) running via ONNX Runtime in-process achieve $>0.70$ cosine similarity retrieval accuracy with sub-20ms latency and zero cloud roundtrips.
+- **Zero Infrastructure Footprint**: Combining in-process FastEmbed with local embedded LanceDB achieves local semantic retrieval within a resident memory budget $<40$MB, eliminating Pinecone, Qdrant, or Weaviate network dependencies for edge and local agent runtimes.
+- **Rubedo Application**: `rubedo-rag` exposes `SpagyricIndex` directly within the compiled agent binary.
+
+---
+
+## 5. Bidirectional Model Context Protocol (MCP) as Universal Interop
+- **Core Thesis**: Custom plugin APIs fragment developer ecosystems. Standardizing on JSON-RPC 2.0 over stdio and SSE allows any agent or tool to act simultaneously as an MCP client and an MCP server.
+- **Rubedo Application**: `rubedo-mcp` exposes native Reagents to Claude Desktop, Cursor, and external tools while consuming remote MCP endpoints as first-class `dyn Reagent` instances.
