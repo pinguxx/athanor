@@ -10,4 +10,4 @@ You MUST execute the master post-task audit pipeline before concluding:
 powershell -ExecutionPolicy Bypass -File .agents/scripts/run_post_task_audits.ps1
 ```
 
-This ensures `critical-code-reviewer`, `security-auditor`, `ui-ux-auditor`, and `tech-curator` checks are automatically run.
+This ensures `critical-code-reviewer` and `security-auditor` checks are automatically run.

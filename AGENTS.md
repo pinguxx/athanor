@@ -18,11 +18,6 @@ This automated verification suite executes:
    - Enforces 100% safe Rust code (or audited `// SAFETY` annotations).
    - Enforces zero compiler/clippy warnings: `cargo clippy --workspace --all-targets -- -D warnings`.
    - Executes full workspace test suite: `cargo test --workspace`.
-3. **UI/UX Usability (`ui-ux-auditor`)**:
-   - Audits visual hierarchy, breathing room, unified slate palette, and accessibility tags on all frontend components (Atelier UI).
-4. **Systems & Architectural Tenets (`tech-curator`)**:
-   - Verifies **Tenet 1**: Zero lifetime annotations in public macros (`#[reagent]`).
-   - Verifies **Tenet 5**: Zero external infrastructure dependencies (embedded SQLite + embedded LanceDB within $<40$MB footprint).
 
 ---
 
