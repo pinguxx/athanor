@@ -43,17 +43,17 @@ flowchart TD
   - [x] 1.7 Phase 1 Unit and Integration Test Suite
   - [x] 1.8 Verify Phase 1: `cargo test -p rubedo-core -p rubedo-macros`
 
-- [ ] **Phase 2: Durable Opus & Crucible Persistence**
-  - [ ] 2.1 `rubedo-crucible` crate scaffolding with `sqlx` (SQLite)
-  - [ ] 2.2 Embedded SQLite migrations (`01_init.sql`: `opus_runs`, `vessel_events`, `suspended_tokens`)
-  - [ ] 2.3 `CrucibleEngine` implementation (run state persistence, transition logging, checkpointing)
-  - [ ] 2.4 `rubedo-opus` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
-  - [ ] 2.5 `Vessel` trait, `VesselStatus`, and `VesselError` models
-  - [ ] 2.6 `OpusBuilder` and DAG topology execution loop
-  - [ ] 2.7 Suspension state machine: `VesselStatus::Suspended { resume_token }`
-  - [ ] 2.8 Resumption engine: `OpusEngine::resume(run_id, token, payload)`
-  - [ ] 2.9 Phase 2 Integration Test (3-step workflow suspension & resumption)
-  - [ ] 2.10 Verify Phase 2: `cargo test -p rubedo-crucible -p rubedo-opus`
+- [x] **Phase 2: Durable Opus & Crucible Persistence**
+  - [x] 2.1 `rubedo-crucible` crate scaffolding with `sqlx` (SQLite)
+  - [x] 2.2 Embedded SQLite migrations (`01_init.sql`: `opus_runs`, `vessel_events`, `suspended_tokens`)
+  - [x] 2.3 `CrucibleEngine` implementation (run state persistence, transition logging, checkpointing)
+  - [x] 2.4 `rubedo-opus` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
+  - [x] 2.5 `Vessel` trait, `VesselStatus`, and `VesselError` models
+  - [x] 2.6 `OpusBuilder` and DAG topology execution loop
+  - [x] 2.7 Suspension state machine: `VesselStatus::Suspended { resume_token }`
+  - [x] 2.8 Resumption engine: `OpusEngine::resume(run_id, token, payload)`
+  - [x] 2.9 Phase 2 Integration Test (3-step workflow suspension & resumption)
+  - [x] 2.10 Verify Phase 2: `cargo test -p rubedo-crucible -p rubedo-opus`
 
 - [ ] **Phase 3: Alembic WASM Sandbox Runtime**
   - [ ] 3.1 `rubedo-alembic` crate scaffolding with `wasmtime` and `wasmtime-wasi`

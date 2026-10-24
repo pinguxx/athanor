@@ -2,6 +2,8 @@
 members = [
     "crates/rubedo-core",
     "crates/rubedo-macros",
+    "crates/rubedo-crucible",
+    "crates/rubedo-opus",
 ]
 resolver = "2"
 
@@ -24,7 +26,7 @@ async-trait = "0.1"
 thiserror = "1.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "json"] }
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "json", "migrate"] }
 wasmtime = "25.0"
 wasmtime-wasi = "25.0"
 axum = "0.7"
@@ -40,3 +42,5 @@ futures = "0.3"
 # Internal workspace crates
 rubedo-core = { path = "crates/rubedo-core", version = "0.1.0" }
 rubedo-macros = { path = "crates/rubedo-macros", version = "0.1.0" }
+rubedo-crucible = { path = "crates/rubedo-crucible", version = "0.1.0" }
+rubedo-opus = { path = "crates/rubedo-opus", version = "0.1.0" }
