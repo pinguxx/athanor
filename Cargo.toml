@@ -1,0 +1,42 @@
+[workspace]
+members = [
+    "crates/rubedo-core",
+    "crates/rubedo-macros",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "MIT OR Apache-2.0"
+authors = ["Rubedo Contributors"]
+repository = "https://github.com/rubedo-rs/rubedo"
+homepage = "https://github.com/rubedo-rs/rubedo"
+readme = "README.md"
+
+[workspace.dependencies]
+tokio = { version = "1.40", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+schemars = { version = "0.8", features = ["derive"] }
+async-trait = "0.1"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "json"] }
+wasmtime = "25.0"
+wasmtime-wasi = "25.0"
+axum = "0.7"
+rust-embed = "8.5"
+syn = { version = "2.0", features = ["full", "extra-traits"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+fastembed = "3.8"
+lancedb = "0.10"
+uuid = { version = "1.10", features = ["v4", "serde"] }
+futures = "0.3"
+
+# Internal workspace crates
+rubedo-core = { path = "crates/rubedo-core", version = "0.1.0" }
+rubedo-macros = { path = "crates/rubedo-macros", version = "0.1.0" }
