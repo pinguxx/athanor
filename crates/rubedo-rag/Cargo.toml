@@ -1,0 +1,36 @@
+[package]
+name = "rubedo-rag"
+description = "Spagyric in-process vector store and embedded RAG subsystem for Rubedo agents"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["agent", "rag", "vector-store", "fastembed", "lancedb"]
+categories = ["algorithms", "science"]
+
+[dependencies]
+rubedo-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+fastembed = { version = "3.8", default-features = false, features = ["ort-load-dynamic", "online"] }
+lancedb = { workspace = true }
+
+futures = { workspace = true }
+arrow-array = "52.2"
+arrow-schema = "52.2"
+tempfile = "3.10"
+
+
+[dev-dependencies]
+tokio = { workspace = true }
+rubedo-macros = { workspace = true }
+schemars = { workspace = true }

@@ -73,14 +73,14 @@ flowchart TD
   - [x] 4.5 Phase 4 In-Memory Duplex Test: McpServer exposes native tool, McpClient discovers & executes it
   - [x] 4.6 Verify Phase 4: `cargo test -p rubedo-mcp`
 
-- [ ] **Phase 5: Spagyric In-Process Vector Store (RAG)**
-  - [ ] 5.1 `rubedo-rag` crate scaffolding with `fastembed` and `lancedb`
-  - [ ] 5.2 Document splitters: semantic and recursive text chunking
-  - [ ] 5.3 `SpagyricIndex` implementation with automatic local embedding initialization (`BGESmallENV15`)
-  - [ ] 5.4 Document ingestion (`add_documents`) and vector search (`search`)
-  - [ ] 5.5 Dynamic `SearchReagent` generation for Artificers
-  - [ ] 5.6 Phase 5 Semantic Test: synonym query matches target document with cosine similarity $>0.70$
-  - [ ] 5.7 Verify Phase 5: `cargo test -p rubedo-rag`
+- [x] **Phase 5: Spagyric In-Process Vector Store (RAG)**
+  - [x] 5.1 `rubedo-rag` crate scaffolding with `fastembed` and `lancedb`
+  - [x] 5.2 Document splitters: semantic and recursive text chunking
+  - [x] 5.3 `SpagyricIndex` implementation with automatic local embedding initialization (`BGESmallENV15`)
+  - [x] 5.4 Document ingestion (`add_documents`) and vector search (`search`)
+  - [x] 5.5 Dynamic `SearchReagent` generation for Artificers
+  - [x] 5.6 Phase 5 Semantic Test: synonym query matches target document with cosine similarity $>0.70$
+  - [x] 5.7 Verify Phase 5: `cargo test -p rubedo-rag`
 
 - [ ] **Phase 6: Atelier Dev Studio & Observability Server**
   - [ ] 6.1 `rubedo-atelier` crate scaffolding with `axum`, `tower-http`, and `rust-embed`

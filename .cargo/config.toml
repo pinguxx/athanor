@@ -1,0 +1,6 @@
+[env]
+PROTOC = "C:/Users/chino/AppData/Local/Microsoft/WinGet/Packages/Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe/bin/protoc.exe"
+ORT_DYLIB_PATH = "C:/Users/chino/.cargo/onnxruntime/onnxruntime.dll"
+HF_ENDPOINT = "https://huggingface.co"
+
+
