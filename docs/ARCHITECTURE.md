@@ -6,26 +6,26 @@ Rubedo is structured as a modular, high-cohesion Rust workspace. The core philos
 
 ```mermaid
 graph TD
-    subgraph ClientAndUI [Observability & Interfaces]
-        AtelierUI[Atelier Svelte UI] <-->|SSE & REST| AtelierServer[rubedo-atelier: Axum Dev Server]
-        ExternalMCPClients[External MCP Clients<br/>e.g. Claude Desktop, Cursor] <-->|stdio / SSE| McpServer[rubedo-mcp: McpServer]
+    subgraph ClientAndUI ["Observability & Interfaces"]
+        AtelierUI["Atelier Svelte UI"] <-->|SSE & REST| AtelierServer["rubedo-atelier: Axum Dev Server"]
+        ExternalMCPClients["External MCP Clients (e.g. Claude Desktop, Cursor)"] <-->|stdio / SSE| McpServer["rubedo-mcp: McpServer"]
     end
 
-    subgraph CoreAgenticRuntime [Agentic Core]
-        Artificer[rubedo-core: Artificer] -->|Executes| ReagentTrait[Reagent Trait Contract]
-        MacroGen[rubedo-macros: #[reagent]] -->|Generates| ReagentTrait
-        OpusEngine[rubedo-opus: OpusEngine] -->|Orchestrates| VesselTrait[Vessel Execution Steps]
+    subgraph CoreAgenticRuntime ["Agentic Core"]
+        Artificer["rubedo-core: Artificer"] -->|Executes| ReagentTrait["Reagent Trait Contract"]
+        MacroGen["rubedo-macros: #[reagent]"] -->|Generates| ReagentTrait
+        OpusEngine["rubedo-opus: OpusEngine"] -->|Orchestrates| VesselTrait["Vessel Execution Steps"]
     end
 
-    subgraph IsolationAndInterop [Security & Interoperability]
-        ReagentTrait -->|Untrusted Tool| AlembicSandbox[rubedo-alembic: Wasmtime Sandbox]
-        ReagentTrait -->|Remote Tool| McpClient[rubedo-mcp: McpClient]
-        ReagentTrait -->|Knowledge Retrieval| SpagyricIndex[rubedo-rag: SpagyricIndex]
+    subgraph IsolationAndInterop ["Security & Interoperability"]
+        ReagentTrait -->|Untrusted Tool| AlembicSandbox["rubedo-alembic: Wasmtime Sandbox"]
+        ReagentTrait -->|Remote Tool| McpClient["rubedo-mcp: McpClient"]
+        ReagentTrait -->|Knowledge Retrieval| SpagyricIndex["rubedo-rag: SpagyricIndex"]
     end
 
-    subgraph StateAndStorage [Durable State Store]
-        VesselTrait -->|State Commits| CrucibleEngine[rubedo-crucible: SQLite Event Store]
-        SpagyricIndex -->|Vector Storage| LanceDB[Embedded LanceDB]
+    subgraph StateAndStorage ["Durable State Store"]
+        VesselTrait -->|State Commits| CrucibleEngine["rubedo-crucible: SQLite Event Store"]
+        SpagyricIndex -->|Vector Storage| LanceDB["Embedded LanceDB"]
     end
 
     AtelierServer -.->|Telemetry Broadcast| OpusEngine

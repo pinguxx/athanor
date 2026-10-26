@@ -30,23 +30,36 @@ Rubedo establishes a new paradigm: **zero external infrastructure**, **sub-40MB 
 ### 2.1 Target Personas
 
 ```mermaid
-mindmap
-  root((Rubedo Target Personas))
-    Enterprise Systems Engineer
-      Mission-critical reliability
-      No unexpected panics
-      Durable audit logs
-    Autonomous AI & Tool Synthesizer
-      Agents writing tools for agents
-      Zero lifetime borrow errors
-      Sandboxed WASM verification
-    Edge & Embedded AI Developer
-      Sub-40MB RAM budget
-      No Docker / No external DBs
-      Single-binary deployment
-    Protocol Integrator
-      Model Context Protocol (MCP) native
-      Tool and agent federations
+flowchart TD
+    Root["Rubedo Target Personas"]
+
+    subgraph P1 ["Enterprise Systems Engineer"]
+        P1A["Mission-critical reliability"]
+        P1B["Zero unexpected panics"]
+        P1C["Durable audit logs"]
+    end
+
+    subgraph P2 ["Autonomous AI & Tool Synthesizer"]
+        P2A["Agents writing tools for agents"]
+        P2B["Zero lifetime borrow errors"]
+        P2C["Sandboxed WASM verification"]
+    end
+
+    subgraph P3 ["Edge & Embedded AI Developer"]
+        P3A["Sub-40MB RAM budget"]
+        P3B["No Docker / No external DBs"]
+        P3C["Single-binary deployment"]
+    end
+
+    subgraph P4 ["Protocol Integrator"]
+        P4A["Model Context Protocol (MCP) native"]
+        P4B["Tool and agent federations"]
+    end
+
+    Root --> P1
+    Root --> P2
+    Root --> P3
+    Root --> P4
 ```
 
 1. **Enterprise Backend & Systems Engineers**: Developers building high-uptime services who cannot tolerate Python process crashes, memory bloat, or brittle runtime schema changes.
@@ -67,20 +80,20 @@ mindmap
 
 ```mermaid
 graph LR
-    subgraph CoreEngine [Rubedo Engine]
-        Artificer[Artificer / Agent] -->|Executes| Reagent[Reagent / Tool]
-        Opus[Opus / Workflow DAG] -->|Coordinates| Vessel[Vessel / Step]
+    subgraph CoreEngine ["Rubedo Engine"]
+        Artificer["Artificer / Agent"] -->|Executes| Reagent["Reagent / Tool"]
+        Opus["Opus / Workflow DAG"] -->|Coordinates| Vessel["Vessel / Step"]
     end
 
-    subgraph SecurityPersistence [Durability & Isolation]
-        Opus -->|Saves State| Crucible[Crucible / SQLite Event Store]
-        Reagent -->|Runs in| Alembic[Alembic / WASM Sandbox]
+    subgraph SecurityPersistence ["Durability & Isolation"]
+        Opus -->|Saves State| Crucible["Crucible / SQLite Event Store"]
+        Reagent -->|Runs in| Alembic["Alembic / WASM Sandbox"]
     end
 
-    subgraph EcosystemObservability [Interoperability & DevEx]
-        Artificer <-->|Speaks| MCP[rubedo-mcp Gateway]
-        Opus -.->|Streams SSE| Atelier[Atelier Dev Studio]
-        Artificer -->|Queries| RAG[Spagyric RAG Vector Store]
+    subgraph EcosystemObservability ["Interoperability & DevEx"]
+        Artificer <-->|Speaks| MCP["rubedo-mcp Gateway"]
+        Opus -.->|Streams SSE| Atelier["Atelier Dev Studio"]
+        Artificer -->|Queries| RAG["Spagyric RAG Vector Store"]
     end
 ```
 
@@ -98,16 +111,16 @@ graph LR
 
 ### Release Milestones Overview
 
-| Milestone | Target Version | Focus | Core Deliverables |
-|:---|:---|:---|:---|
-| **Phase 1** | `v0.1.0-alpha.1` | The Alchemical Foundation | `rubedo-core`, `rubedo-macros` (`#[reagent]`) |
-| **Phase 2** | `v0.1.0-alpha.2` | Durable Workflow Engine | `rubedo-opus`, `rubedo-crucible` (SQLite State Machine) |
-| **Phase 3** | `v0.2.0-alpha` | Untrusted Sandbox Isolation | `rubedo-alembic` (Wasmtime runtime, fuel limits) |
-| **Phase 4** | `v0.2.0-beta` | Universal Interoperability | `rubedo-mcp` (Bidirectional JSON-RPC stdio/SSE) |
-| **Phase 5** | `v0.3.0-alpha` | Spagyric In-Process RAG | `rubedo-rag` (fastembed-rs, lancedb, splitters) |
-| **Phase 6** | `v0.3.0-beta` | Embedded Dev Studio | `rubedo-atelier` (Axum SSE server, rust-embed Svelte UI) |
-| **Phase 7** | `v0.4.0` | Verification & Guardrails | `rubedo-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) |
-| **Phase 8** | `v1.0.0` | Production Hardening | Examples, benchmarks, documentation, multi-platform release |
+| Milestone | Target Version | Focus | Core Deliverables | Status |
+|:---|:---|:---|:---|:---|
+| **Phase 1** | `v0.1.0-alpha.1` | The Alchemical Foundation | `rubedo-core`, `rubedo-macros` (`#[reagent]`) | Completed |
+| **Phase 2** | `v0.1.0-alpha.2` | Durable Workflow Engine | `rubedo-opus`, `rubedo-crucible` (SQLite State Machine) | Completed |
+| **Phase 3** | `v0.2.0-alpha` | Untrusted Sandbox Isolation | `rubedo-alembic` (Wasmtime runtime, fuel limits) | Completed |
+| **Phase 4** | `v0.2.0-beta` | Universal Interoperability | `rubedo-mcp` (Bidirectional JSON-RPC stdio/SSE) | Completed |
+| **Phase 5** | `v0.3.0-alpha` | Spagyric In-Process RAG | `rubedo-rag` (fastembed-rs, lancedb, splitters) | Completed |
+| **Phase 6** | `v0.3.0-beta` | Embedded Dev Studio | `rubedo-atelier` (Axum SSE server, rust-embed Svelte UI) | Completed |
+| **Phase 7** | `v0.4.0` | Verification & Guardrails | `rubedo-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) | Pending |
+| **Phase 8** | `v1.0.0` | Production Hardening | Examples, benchmarks, documentation, multi-platform release | Pending |
 
 ---
 

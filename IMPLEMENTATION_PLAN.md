@@ -82,14 +82,14 @@ flowchart TD
   - [x] 5.6 Phase 5 Semantic Test: synonym query matches target document with cosine similarity $>0.70$
   - [x] 5.7 Verify Phase 5: `cargo test -p rubedo-rag`
 
-- [ ] **Phase 6: Atelier Dev Studio & Observability Server**
-  - [ ] 6.1 `rubedo-atelier` crate scaffolding with `axum`, `tower-http`, and `rust-embed`
-  - [ ] 6.2 Telemetry pipeline: custom `tracing_subscriber::Layer` feeding Tokio broadcast channel
-  - [ ] 6.3 HTTP API endpoints (`GET /api/registry`, `GET /api/events` SSE, `POST /api/opus/:run_id/resume`)
-  - [ ] 6.4 Static asset handler (`GET /*`) serving embedded Svelte UI from memory
-  - [ ] 6.5 Svelte/Vite UI minimal visualizer shell for live traces and checkpoint inspection
-  - [ ] 6.6 Phase 6 Integration Test: Ephemeral server start & registry endpoint validation
-  - [ ] 6.7 Verify Phase 6: `cargo test -p rubedo-atelier`
+- [x] **Phase 6: Atelier Dev Studio & Observability Server**
+  - [x] 6.1 `rubedo-atelier` crate scaffolding with `axum`, `tower-http`, and `rust-embed`
+  - [x] 6.2 Telemetry pipeline: custom `tracing_subscriber::Layer` feeding Tokio broadcast channel
+  - [x] 6.3 HTTP API endpoints (`GET /api/registry`, `GET /api/events` SSE, `POST /api/opus/:run_id/resume`)
+  - [x] 6.4 Static asset handler (`GET /*`) serving embedded Svelte UI from memory
+  - [x] 6.5 Svelte/Vite UI minimal visualizer shell for live traces and checkpoint inspection
+  - [x] 6.6 Phase 6 Integration Test: Ephemeral server start & registry endpoint validation
+  - [x] 6.7 Verify Phase 6: `cargo test -p rubedo-atelier`
 
 - [ ] **Phase 7: Verification Harness & Evaluation Guardrails**
   - [ ] 7.1 `rubedo-evals` crate scaffolding
