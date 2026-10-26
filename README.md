@@ -534,7 +534,6 @@ Explore deep architectural blueprints and technical specifications:
 - **[Technical Specification](ATHANOR_SPEC.md)**: Exhaustive contracts for all traits, structs, error types, SQLite schemas, WASM isolation, MCP protocols, and REST/SSE endpoints.
 - **[Subsystem Architecture](docs/ARCHITECTURE.md)**: Deep dive into the "Zero Lifetime Annotations" pattern, event-sourced state machines, WASM fuel limits, and in-process RAG.
 - **[Master Implementation Plan](IMPLEMENTATION_PLAN.md)**: Detailed subsystem task breakdown with verifiable milestones and exit criteria.
-- **[Agent Execution Guide](docs/AGENT_GUIDE.md)**: Guidelines and operational procedures for Antigravity and AI coding assistants.
 
 ---
 

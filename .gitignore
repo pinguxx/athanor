@@ -5,6 +5,7 @@ Cargo.lock
 .agents/.logs/
 .fastembed_cache/
 docs/phases/
+docs/AGENT_GUIDE.md
 .cargo/config.toml
 
 
