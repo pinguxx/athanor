@@ -22,7 +22,7 @@ When invoking an agent for any phase, use this structured prompt:
 You are implementing Phase [NUMBER]: [NAME] for the Rubedo agent framework.
 
 Context:
-Review the subsystem specifications in RUBEDO_SPEC.md and the detailed phase guide in docs/phases/phase-[NUMBER]-[SLUG].md.
+Review the subsystem specifications in RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -46,7 +46,7 @@ Deliverables:
 You are implementing Phase 1: Foundation & #[reagent] Macro Synthesizer for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-01-core-and-macros.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -67,7 +67,7 @@ Deliverables:
 You are implementing Phase 2: Durable Opus & Crucible Persistence for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-02-opus-and-crucible.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -89,7 +89,7 @@ Deliverables:
 You are implementing Phase 3: Alembic WASM Sandbox Runtime for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-03-alembic-wasm.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -110,7 +110,7 @@ Deliverables:
 You are implementing Phase 4: Bidirectional Model Context Protocol (MCP) Gateway for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-04-mcp-gateway.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -131,7 +131,7 @@ Deliverables:
 You are implementing Phase 5: Spagyric RAG & In-Process Vector Store for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-05-spagyric-rag.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -152,7 +152,7 @@ Deliverables:
 You are implementing Phase 6: Atelier Dev Studio & Observability Server for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-06-atelier-studio.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -173,7 +173,7 @@ Deliverables:
 You are implementing Phase 7: Verification Harness & Evaluation Guardrails for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-07-evals-and-guardrails.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -195,7 +195,7 @@ Deliverables:
 You are implementing Phase 8: Reference Examples & Release Hardening for the Rubedo agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/phases/phase-08-examples-and-release.md.
+Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.

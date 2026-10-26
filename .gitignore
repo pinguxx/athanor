@@ -4,5 +4,6 @@ Cargo.lock
 *.pdb
 .agents/.logs/
 .fastembed_cache/
+docs/phases/
 
 

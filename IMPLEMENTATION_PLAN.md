@@ -111,7 +111,7 @@ flowchart TD
 
 ### Phase 1: Foundation & `#[reagent]` Macro Synthesizer
 - **Primary Target Crates**: `crates/rubedo-core`, `crates/rubedo-macros`
-- **Specification**: [Detailed Phase 1 Guide](file:///c:/dev/Rubedo/docs/phases/phase-01-core-and-macros.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: `#[reagent]` generates valid JSON schemas; `transmute()` correctly validates inputs against schema; zero lifetime annotations required.
 - **Verification Command**:
   ```bash
@@ -120,7 +120,7 @@ flowchart TD
 
 ### Phase 2: Durable Opus & Crucible Persistence
 - **Primary Target Crates**: `crates/rubedo-opus`, `crates/rubedo-crucible`
-- **Specification**: [Detailed Phase 2 Guide](file:///c:/dev/Rubedo/docs/phases/phase-02-opus-and-crucible.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Workflows can halt at any step, persist state to SQLite, yield a token, and cleanly resume from token without state corruption.
 - **Verification Command**:
   ```bash
@@ -129,7 +129,7 @@ flowchart TD
 
 ### Phase 3: Alembic WASM Sandbox Runtime
 - **Primary Target Crates**: `crates/rubedo-alembic`
-- **Specification**: [Detailed Phase 3 Guide](file:///c:/dev/Rubedo/docs/phases/phase-03-alembic-wasm.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Untrusted guest WASM modules run with zero filesystem/network access; infinite loops abort within 15ms upon fuel exhaustion.
 - **Verification Command**:
   ```bash
@@ -138,7 +138,7 @@ flowchart TD
 
 ### Phase 4: Bidirectional Model Context Protocol (MCP) Gateway
 - **Primary Target Crates**: `crates/rubedo-mcp`
-- **Specification**: [Detailed Phase 4 Guide](file:///c:/dev/Rubedo/docs/phases/phase-04-mcp-gateway.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Internal reagents can be served over MCP stdio/SSE; external MCP servers can be consumed seamlessly as dynamic `dyn Reagent` instances.
 - **Verification Command**:
   ```bash
@@ -147,7 +147,7 @@ flowchart TD
 
 ### Phase 5: Spagyric RAG & In-Process Vector Store
 - **Primary Target Crates**: `crates/rubedo-rag`
-- **Specification**: [Detailed Phase 5 Guide](file:///c:/dev/Rubedo/docs/phases/phase-05-spagyric-rag.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Documents split, embedded via `fastembed-rs` (BGESmallENV15), stored in `lancedb`, and queried with cosine similarity $>0.70$ completely in-process.
 - **Verification Command**:
   ```bash
@@ -156,7 +156,7 @@ flowchart TD
 
 ### Phase 6: Atelier Dev Studio & Observability Server `[COMPLETED]`
 - **Primary Target Crates**: `crates/rubedo-atelier`
-- **Specification**: [Detailed Phase 6 Guide](file:///c:/dev/Rubedo/docs/phases/phase-06-atelier-studio.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Embedded Axum server starts, serves static frontend assets via `rust-embed`, streams live SSE telemetry, and exposes checkpoint replay API.
 - **Verification Command**:
   ```bash
@@ -165,7 +165,7 @@ flowchart TD
 
 ### Phase 7: Verification Harness & Evaluation Guardrails `[COMPLETED]`
 - **Primary Target Crates**: `crates/rubedo-evals`
-- **Specification**: [Detailed Phase 7 Guide](file:///c:/dev/Rubedo/docs/phases/phase-07-evals-and-guardrails.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: Automated benchmark evaluation suite detects regressions, scores semantic criteria, and enforces token budgets.
 - **Verification Command**:
   ```bash
@@ -174,7 +174,7 @@ flowchart TD
 
 ### Phase 8: Reference Examples & Workspace Release `[COMPLETED]`
 - **Primary Target**: `examples/*` and root workspace validation
-- **Specification**: [Detailed Phase 8 Guide](file:///c:/dev/Rubedo/docs/phases/phase-08-examples-and-release.md)
+- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
 - **Exit Criteria**: All three reference examples build and run without warnings; `cargo test --all` passes 100%.
 - **Verification Command**:
   ```bash
