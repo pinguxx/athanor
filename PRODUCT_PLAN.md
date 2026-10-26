@@ -1,8 +1,8 @@
-﻿# ATHANOR: Product Plan & Strategic Roadmap
+# ATHANOR: Product Plan & Strategic Roadmap
 
 ## Executive Summary
 
-**Athanor** is an ironclad, enterprise-grade agentic framework engineered in Rust. Named after the fourth and final alchemical phase (*athanor*, redness)—wherein base matter is transmuted into enduring gold—Athanor distills chaotic, non-deterministic LLM streams into deterministic, verified, and durable state transitions.
+**Athanor** is an ironclad, enterprise-grade agentic framework engineered in Rust. Named after the cosmic, self-feeding furnace of the alchemists (*Athanor*)—designed to maintain an undying, constant heat across perpetual cycles of distillation—Athanor distills chaotic, non-deterministic LLM streams into deterministic, verified, and durable state transitions.
 
 While the modern AI landscape is inundated with dynamic, interpreted Python agent frameworks (e.g., LangChain, AutoGen, CrewAI), production engineering teams face severe hurdles: runtime type mismatches, uncontrolled memory growth, lack of deterministic execution checkpointing, cumbersome infrastructure requirements (external Redis/Postgres/Vector databases), and hazardous untrusted code execution.
 

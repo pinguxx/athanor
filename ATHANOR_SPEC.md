@@ -1,6 +1,6 @@
-﻿# ATHANOR: Technical Specification & Subsystem Architecture
+# ATHANOR: Technical Specification & Subsystem Architecture
 
-> **Athanor (*Redness*)**: The fourth and final stage of the alchemical *Magnum Opus*, transmuting raw base matter into gold. In this framework, chaotic, non-deterministic agent inputs and LLM streams are distilled into deterministic, verified, and durable state transitions using Rust’s compile-time safety and async runtime.
+> **Athanor**: The cosmic, self-feeding furnace of the alchemists, engineered to maintain an undying, constant heat across perpetual cycles of distillation. In this framework, chaotic, non-deterministic agent inputs and LLM streams are distilled into deterministic, verified, and durable state transitions using Rust’s compile-time safety and async runtime.
 
 ---
 
