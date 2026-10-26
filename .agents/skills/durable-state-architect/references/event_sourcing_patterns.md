@@ -1,7 +1,7 @@
-# Event Sourcing & State Hydration Patterns in Rubedo
+﻿# Event Sourcing & State Hydration Patterns in Athanor
 
 ## 1. Dual-Store Model (Snapshots + Event Journal)
-`rubedo-crucible` combines snapshots with append-only event logs:
+`athanor-crucible` combines snapshots with append-only event logs:
 - **`opus_runs.current_state`**: Provides fast $O(1)$ state retrieval when resuming or inspecting a run.
 - **`vessel_events`**: Provides an immutable audit trail and enables step-by-step time-travel replay.
 

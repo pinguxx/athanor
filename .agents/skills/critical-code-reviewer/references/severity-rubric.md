@@ -1,6 +1,6 @@
-# ⚖️ Severity Classification Rubric for Rubedo
+﻿# ⚖️ Severity Classification Rubric for Athanor
 
-Use this standardized rubric to ensure consistent, objective classification of code review findings across the **Rubedo** agentic framework.
+Use this standardized rubric to ensure consistent, objective classification of code review findings across the **Athanor** agentic framework.
 
 ---
 

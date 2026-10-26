@@ -1,4 +1,4 @@
-# Rubedo Performance Budgets & Hardware Constraints
+﻿# Athanor Performance Budgets & Hardware Constraints
 
 ## 1. Memory Budget Breakdown (Total Budget: $\le 40$ MB)
 

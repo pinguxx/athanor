@@ -1,0 +1,8 @@
+# Example Cargo Configuration for Athanor
+# Copy this file to .cargo/config.toml if you need custom environment paths for native dependencies
+# (e.g. protoc, onnxruntime for fastembed / lancedb).
+
+[env]
+# PROTOC = "/path/to/protoc"
+# ORT_DYLIB_PATH = "/path/to/onnxruntime.so" # (or .dylib on macOS, .dll on Windows)
+HF_ENDPOINT = "https://huggingface.co"

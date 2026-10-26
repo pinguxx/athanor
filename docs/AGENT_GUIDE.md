@@ -1,6 +1,6 @@
-# Antigravity Agent Execution Guide & Prompting Handbook
+﻿# Antigravity Agent Execution Guide & Prompting Handbook
 
-This handbook provides standard operating procedures, strict implementation constraints, and copy-paste prompt templates for executing each phase of **Rubedo** using Antigravity or related AI coding agents.
+This handbook provides standard operating procedures, strict implementation constraints, and copy-paste prompt templates for executing each phase of **Athanor** using Antigravity or related AI coding agents.
 
 ---
 
@@ -19,10 +19,10 @@ This handbook provides standard operating procedures, strict implementation cons
 When invoking an agent for any phase, use this structured prompt:
 
 ```markdown
-You are implementing Phase [NUMBER]: [NAME] for the Rubedo agent framework.
+You are implementing Phase [NUMBER]: [NAME] for the Athanor agent framework.
 
 Context:
-Review the subsystem specifications in RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review the subsystem specifications in ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -43,10 +43,10 @@ Deliverables:
 
 ### Phase 1 Prompt
 ```markdown
-You are implementing Phase 1: Foundation & #[reagent] Macro Synthesizer for the Rubedo agent framework.
+You are implementing Phase 1: Foundation & #[reagent] Macro Synthesizer for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -56,18 +56,18 @@ Implementation Constraints:
 
 Deliverables:
 - Initialize root Cargo.toml workspace.
-- Create and populate crates/rubedo-core (Reagent, ReagentError, Artificer, AthanorContext).
-- Create and populate crates/rubedo-macros (proc macro #[reagent] generating JSON schemas via schemars).
-- Add integration test under crates/rubedo-macros/tests/reagent_test.rs.
-- Verify with `cargo test -p rubedo-core -p rubedo-macros`.
+- Create and populate crates/athanor-core (Reagent, ReagentError, Artificer, AthanorContext).
+- Create and populate crates/athanor-macros (proc macro #[reagent] generating JSON schemas via schemars).
+- Add integration test under crates/athanor-macros/tests/reagent_test.rs.
+- Verify with `cargo test -p athanor-core -p athanor-macros`.
 ```
 
 ### Phase 2 Prompt
 ```markdown
-You are implementing Phase 2: Durable Opus & Crucible Persistence for the Rubedo agent framework.
+You are implementing Phase 2: Durable Opus & Crucible Persistence for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -76,20 +76,20 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-crucible with sqlx SQLite migrations (opus_runs, vessel_events, suspended_tokens).
+- Scaffold crates/athanor-crucible with sqlx SQLite migrations (opus_runs, vessel_events, suspended_tokens).
 - Implement CrucibleEngine for state persistence, transition logging, and checkpoints.
-- Scaffold crates/rubedo-opus with Vessel trait, OpusBuilder, and OpusEngine state machine.
+- Scaffold crates/athanor-opus with Vessel trait, OpusBuilder, and OpusEngine state machine.
 - Implement tokenized suspension and OpusEngine::resume().
-- Add integration test under crates/rubedo-opus/tests/durable_workflow_test.rs.
-- Verify with `cargo test -p rubedo-crucible -p rubedo-opus`.
+- Add integration test under crates/athanor-opus/tests/durable_workflow_test.rs.
+- Verify with `cargo test -p athanor-crucible -p athanor-opus`.
 ```
 
 ### Phase 3 Prompt
 ```markdown
-You are implementing Phase 3: Alembic WASM Sandbox Runtime for the Rubedo agent framework.
+You are implementing Phase 3: Alembic WASM Sandbox Runtime for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -98,19 +98,19 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-alembic with wasmtime and wasmtime-wasi.
+- Scaffold crates/athanor-alembic with wasmtime and wasmtime-wasi.
 - Implement AlembicConfig (max_memory_bytes, fuel_limit) and AlembicSandbox.
-- Build host-guest linear memory bridge and wrap WASM modules into rubedo_core::Reagent.
-- Add integration test under crates/rubedo-alembic/tests/fuel_exhaustion_test.rs asserting infinite loop halts in <15ms.
-- Verify with `cargo test -p rubedo-alembic`.
+- Build host-guest linear memory bridge and wrap WASM modules into athanor_core::Reagent.
+- Add integration test under crates/athanor-alembic/tests/fuel_exhaustion_test.rs asserting infinite loop halts in <15ms.
+- Verify with `cargo test -p athanor-alembic`.
 ```
 
 ### Phase 4 Prompt
 ```markdown
-You are implementing Phase 4: Bidirectional Model Context Protocol (MCP) Gateway for the Rubedo agent framework.
+You are implementing Phase 4: Bidirectional Model Context Protocol (MCP) Gateway for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -119,19 +119,19 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-mcp with JSON-RPC 2.0 serialization.
+- Scaffold crates/athanor-mcp with JSON-RPC 2.0 serialization.
 - Implement McpServer exposing native Reagents over stdio/in-memory duplex.
 - Implement McpClient discovering tools and wrapping them into dynamic Reagents.
-- Add integration test under crates/rubedo-mcp/tests/bidirectional_mcp_test.rs.
-- Verify with `cargo test -p rubedo-mcp`.
+- Add integration test under crates/athanor-mcp/tests/bidirectional_mcp_test.rs.
+- Verify with `cargo test -p athanor-mcp`.
 ```
 
 ### Phase 5 Prompt
 ```markdown
-You are implementing Phase 5: Spagyric RAG & In-Process Vector Store for the Rubedo agent framework.
+You are implementing Phase 5: Spagyric RAG & In-Process Vector Store for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -140,19 +140,19 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-rag with fastembed (BGESmallENV15) and lancedb.
+- Scaffold crates/athanor-rag with fastembed (BGESmallENV15) and lancedb.
 - Implement text chunkers and SpagyricIndex (add_documents, search).
 - Implement dynamic SearchReagent for Artificers.
-- Add integration test under crates/rubedo-rag/tests/semantic_search_test.rs verifying cosine similarity >0.70.
-- Verify with `cargo test -p rubedo-rag`.
+- Add integration test under crates/athanor-rag/tests/semantic_search_test.rs verifying cosine similarity >0.70.
+- Verify with `cargo test -p athanor-rag`.
 ```
 
 ### Phase 6 Prompt
 ```markdown
-You are implementing Phase 6: Atelier Dev Studio & Observability Server for the Rubedo agent framework.
+You are implementing Phase 6: Atelier Dev Studio & Observability Server for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -161,19 +161,19 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-atelier with axum, tower-http, and rust-embed.
+- Scaffold crates/athanor-atelier with axum, tower-http, and rust-embed.
 - Configure custom tracing layer streaming to Tokio broadcast channel.
 - Implement HTTP routes: /api/registry, /api/events (SSE), /api/opus/:run_id/resume, and embedded static asset fallback.
-- Add integration test under crates/rubedo-atelier/tests/atelier_server_test.rs.
-- Verify with `cargo test -p rubedo-atelier`.
+- Add integration test under crates/athanor-atelier/tests/atelier_server_test.rs.
+- Verify with `cargo test -p athanor-atelier`.
 ```
 
 ### Phase 7 Prompt
 ```markdown
-You are implementing Phase 7: Verification Harness & Evaluation Guardrails for the Rubedo agent framework.
+You are implementing Phase 7: Verification Harness & Evaluation Guardrails for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.
@@ -182,20 +182,20 @@ Implementation Constraints:
 4. Ensure all asynchronous traits use #[async_trait].
 
 Deliverables:
-- Scaffold crates/rubedo-evals.
+- Scaffold crates/athanor-evals.
 - Implement ExactMatch, LevenshteinDistance, and JsonGrammarValidator.
 - Implement LlmJudge and TokenBudgetGuard.
 - Implement #[artificer_test] procedural macro for running benchmarks.
-- Add integration test under crates/rubedo-evals/tests/eval_harness_test.rs.
-- Verify with `cargo test -p rubedo-evals`.
+- Add integration test under crates/athanor-evals/tests/eval_harness_test.rs.
+- Verify with `cargo test -p athanor-evals`.
 ```
 
 ### Phase 8 Prompt
 ```markdown
-You are implementing Phase 8: Reference Examples & Release Hardening for the Rubedo agent framework.
+You are implementing Phase 8: Reference Examples & Release Hardening for the Athanor agent framework.
 
 Context:
-Review RUBEDO_SPEC.md and docs/ARCHITECTURE.md.
+Review ATHANOR_SPEC.md and docs/ARCHITECTURE.md.
 
 Implementation Constraints:
 1. Ensure all types passing through Opus, Reagent, and Artificer are 'static + Send + Sync.

@@ -1,14 +1,14 @@
----
+﻿---
 name: mcp-protocol-expert
 description: >-
   Authoritative expert on the Model Context Protocol (MCP 2024-11-05+) and JSON-RPC 2.0.
-  Use when designing, auditing, or testing rubedo-mcp, tool discovery (tools/list),
+  Use when designing, auditing, or testing athanor-mcp, tool discovery (tools/list),
   tool execution (tools/call), or stdio/SSE transport channels.
 ---
 
 # MCP Protocol Expert (Model Context Protocol Guide)
 
-A specialized skill for building, verifying, and testing bidirectional Model Context Protocol (MCP) integrations within `rubedo-mcp`. Ensures seamless interoperability with Claude Desktop, Cursor, and remote MCP tool ecosystems.
+A specialized skill for building, verifying, and testing bidirectional Model Context Protocol (MCP) integrations within `athanor-mcp`. Ensures seamless interoperability with Claude Desktop, Cursor, and remote MCP tool ecosystems.
 
 ---
 
@@ -19,13 +19,13 @@ External Client (e.g., Claude Desktop, Cursor)
         │
         ├── [JSON-RPC 2.0 via Stdio or SSE]
         ▼
-   McpServer (rubedo-mcp)
+   McpServer (athanor-mcp)
         │
         ├── Discovers & registers native #[reagent] tools
         ├── Exposes tool schemas via `tools/list`
         └── Dispatches execution via `tools/call` -> `Reagent::transmute()`
 -------------------------------------------------------------------------
-   McpClient (rubedo-mcp)
+   McpClient (athanor-mcp)
         │
         ├── Connects to external MCP servers (stdio or SSE)
         ├── Fetches remote schemas via `tools/list`
@@ -45,7 +45,7 @@ External Client (e.g., Claude Desktop, Cursor)
   "params": {
     "protocolVersion": "2024-11-05",
     "capabilities": { "tools": {} },
-    "clientInfo": { "name": "rubedo-mcp-client", "version": "0.1.0" }
+    "clientInfo": { "name": "athanor-mcp-client", "version": "0.1.0" }
   }
 }
 ```

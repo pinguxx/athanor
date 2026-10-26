@@ -1,6 +1,6 @@
 [package]
 name = "sandboxed-alembic"
-description = "Reference example demonstrating WebAssembly sandboxing, fuel limits, and memory isolation with rubedo-alembic"
+description = "Reference example demonstrating WebAssembly sandboxing, fuel limits, and memory isolation with athanor-alembic"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,8 +9,8 @@ authors.workspace = true
 publish = false
 
 [dependencies]
-rubedo-core = { workspace = true }
-rubedo-alembic = { workspace = true }
+athanor-core = { workspace = true }
+athanor-alembic = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

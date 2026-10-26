@@ -1,6 +1,6 @@
-# Canonical WebAssembly Text (.wat) Test Fixtures
+﻿# Canonical WebAssembly Text (.wat) Test Fixtures
 
-These fixtures provide minimal, zero-dependency WebAssembly modules used in `rubedo-alembic` unit and integration tests.
+These fixtures provide minimal, zero-dependency WebAssembly modules used in `athanor-alembic` unit and integration tests.
 
 ---
 

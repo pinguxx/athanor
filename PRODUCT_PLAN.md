@@ -1,12 +1,12 @@
-# RUBEDO: Product Plan & Strategic Roadmap
+﻿# ATHANOR: Product Plan & Strategic Roadmap
 
 ## Executive Summary
 
-**Rubedo** is an ironclad, enterprise-grade agentic framework engineered in Rust. Named after the fourth and final alchemical phase (*rubedo*, redness)—wherein base matter is transmuted into enduring gold—Rubedo distills chaotic, non-deterministic LLM streams into deterministic, verified, and durable state transitions.
+**Athanor** is an ironclad, enterprise-grade agentic framework engineered in Rust. Named after the fourth and final alchemical phase (*athanor*, redness)—wherein base matter is transmuted into enduring gold—Athanor distills chaotic, non-deterministic LLM streams into deterministic, verified, and durable state transitions.
 
 While the modern AI landscape is inundated with dynamic, interpreted Python agent frameworks (e.g., LangChain, AutoGen, CrewAI), production engineering teams face severe hurdles: runtime type mismatches, uncontrolled memory growth, lack of deterministic execution checkpointing, cumbersome infrastructure requirements (external Redis/Postgres/Vector databases), and hazardous untrusted code execution.
 
-Rubedo establishes a new paradigm: **zero external infrastructure**, **sub-40MB resident memory footprint**, **deterministic SQLite-backed pause/resume workflows**, **fuel-metered WASM tool isolation**, and **bidirectional Model Context Protocol (MCP)** integration.
+Athanor establishes a new paradigm: **zero external infrastructure**, **sub-40MB resident memory footprint**, **deterministic SQLite-backed pause/resume workflows**, **fuel-metered WASM tool isolation**, and **bidirectional Model Context Protocol (MCP)** integration.
 
 ---
 
@@ -14,13 +14,13 @@ Rubedo establishes a new paradigm: **zero external infrastructure**, **sub-40MB 
 
 ### 1.1 The Production Agent Dilemma
 
-| Challenge in Existing Frameworks | Python Ecosystem (LangChain, AutoGen, CrewAI) | Typical Rust Attempts (Rig, raw LLM APIs) | Rubedo Solution |
+| Challenge in Existing Frameworks | Python Ecosystem (LangChain, AutoGen, CrewAI) | Typical Rust Attempts (Rig, raw LLM APIs) | Athanor Solution |
 |:---|:---|:---|:---|
 | **Type Safety & Schema Integrity** | Dynamic schemas prone to runtime `KeyError` or malformed LLM JSON. | Requires manual serde boilerplate for every tool and prompt. | Compile-time JSON Schema generation via `#[reagent]` with zero lifetime annotations. |
 | **Durable Execution & Checkpointing** | Complex external orchestrators (Temporal, Celery) or ephemeral memory. | In-memory only; workflows lose state on reboot or crash. | Native SQLite-backed event sourcing (`Crucible`) with tokenized pause/resume. |
 | **Untrusted Code Execution** | Unsafe `exec()` or heavyweight Docker containers (slow spin-up, high RAM). | Unsafe subprocessing or complex external daemon isolation. | In-process WASM sandbox (`Alembic`) via Wasmtime with fuel limits and linear memory bounds. |
 | **Infrastructure Overhead** | Requires Redis, PostgreSQL, Milvus/Qdrant, and Python virtualenvs (>500MB). | Minimal runtime, but leaves vector store and persistence as exercise to user. | Zero external infrastructure: embedded SQLite (`sqlx`) + embedded vector DB (`lancedb` + `fastembed-rs`) under 40MB. |
-| **Interoperability** | Fragmented custom plugin formats. | Ad-hoc tool implementations. | First-class Bidirectional MCP (`rubedo-mcp`) host & client out-of-the-box. |
+| **Interoperability** | Fragmented custom plugin formats. | Ad-hoc tool implementations. | First-class Bidirectional MCP (`athanor-mcp`) host & client out-of-the-box. |
 | **Observability & Inspection** | Heavy SaaS dashboards (LangSmith, Phoenix) requiring external API keys. | Raw logs (`tracing-subscriber`). | Single-binary embedded Dev Studio (`Atelier`) with real-time SSE telemetry & replay. |
 
 ---
@@ -31,7 +31,7 @@ Rubedo establishes a new paradigm: **zero external infrastructure**, **sub-40MB 
 
 ```mermaid
 flowchart TD
-    Root["Rubedo Target Personas"]
+    Root["Athanor Target Personas"]
 
     subgraph P1 ["Enterprise Systems Engineer"]
         P1A["Mission-critical reliability"]
@@ -63,7 +63,7 @@ flowchart TD
 ```
 
 1. **Enterprise Backend & Systems Engineers**: Developers building high-uptime services who cannot tolerate Python process crashes, memory bloat, or brittle runtime schema changes.
-2. **Autonomous Tool Synthesis Agents**: LLMs generating executable code at runtime. Rubedo's macros enforce value semantics (`'static + Send + Sync`) and `Arc` envelopes, preventing the borrow-checker lifetime errors that trip up code-generating models.
+2. **Autonomous Tool Synthesis Agents**: LLMs generating executable code at runtime. Athanor's macros enforce value semantics (`'static + Send + Sync`) and `Arc` envelopes, preventing the borrow-checker lifetime errors that trip up code-generating models.
 3. **Edge, CLI, and Embedded AI Builders**: Robotics, local appliance, or developer CLI teams needing an intelligent agent runtime running in restricted environments with a total memory ceiling under 40MB.
 4. **Security & Compliance Officers**: Organizations mandating strict isolation for LLM-generated code and verifiable, event-sourced audit logs of all agent actions.
 
@@ -80,7 +80,7 @@ flowchart TD
 
 ```mermaid
 graph LR
-    subgraph CoreEngine ["Rubedo Engine"]
+    subgraph CoreEngine ["Athanor Engine"]
         Artificer["Artificer / Agent"] -->|Executes| Reagent["Reagent / Tool"]
         Opus["Opus / Workflow DAG"] -->|Coordinates| Vessel["Vessel / Step"]
     end
@@ -91,7 +91,7 @@ graph LR
     end
 
     subgraph EcosystemObservability ["Interoperability & DevEx"]
-        Artificer <-->|Speaks| MCP["rubedo-mcp Gateway"]
+        Artificer <-->|Speaks| MCP["athanor-mcp Gateway"]
         Opus -.->|Streams SSE| Atelier["Atelier Dev Studio"]
         Artificer -->|Queries| RAG["Spagyric RAG Vector Store"]
     end
@@ -113,13 +113,13 @@ graph LR
 
 | Milestone | Target Version | Focus | Core Deliverables | Status |
 |:---|:---|:---|:---|:---|
-| **Phase 1** | `v0.1.0-alpha.1` | The Alchemical Foundation | `rubedo-core`, `rubedo-macros` (`#[reagent]`) | Completed |
-| **Phase 2** | `v0.1.0-alpha.2` | Durable Workflow Engine | `rubedo-opus`, `rubedo-crucible` (SQLite State Machine) | Completed |
-| **Phase 3** | `v0.2.0-alpha` | Untrusted Sandbox Isolation | `rubedo-alembic` (Wasmtime runtime, fuel limits) | Completed |
-| **Phase 4** | `v0.2.0-beta` | Universal Interoperability | `rubedo-mcp` (Bidirectional JSON-RPC stdio/SSE) | Completed |
-| **Phase 5** | `v0.3.0-alpha` | Spagyric In-Process RAG | `rubedo-rag` (fastembed-rs, lancedb, splitters) | Completed |
-| **Phase 6** | `v0.3.0-beta` | Embedded Dev Studio | `rubedo-atelier` (Axum SSE server, rust-embed Svelte UI) | Completed |
-| **Phase 7** | `v0.4.0` | Verification & Guardrails | `rubedo-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) | Completed |
+| **Phase 1** | `v0.1.0-alpha.1` | The Alchemical Foundation | `athanor-core`, `athanor-macros` (`#[reagent]`) | Completed |
+| **Phase 2** | `v0.1.0-alpha.2` | Durable Workflow Engine | `athanor-opus`, `athanor-crucible` (SQLite State Machine) | Completed |
+| **Phase 3** | `v0.2.0-alpha` | Untrusted Sandbox Isolation | `athanor-alembic` (Wasmtime runtime, fuel limits) | Completed |
+| **Phase 4** | `v0.2.0-beta` | Universal Interoperability | `athanor-mcp` (Bidirectional JSON-RPC stdio/SSE) | Completed |
+| **Phase 5** | `v0.3.0-alpha` | Spagyric In-Process RAG | `athanor-rag` (fastembed-rs, lancedb, splitters) | Completed |
+| **Phase 6** | `v0.3.0-beta` | Embedded Dev Studio | `athanor-atelier` (Axum SSE server, rust-embed Svelte UI) | Completed |
+| **Phase 7** | `v0.4.0` | Verification & Guardrails | `athanor-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) | Completed |
 | **Phase 8** | `v1.0.0` | Production Hardening | Examples, benchmarks, documentation, multi-platform release | Completed |
 
 ---
@@ -143,4 +143,4 @@ graph LR
 1. **Correctness & Zero Crashes**: 100% of internal errors categorized via `thiserror` (Recoverable vs Fatal vs InvalidInput), with zero uncaught panics.
 2. **Durability Guarantee**: 100% recovery of suspended workflow states across process restarts.
 3. **Agent Synthesis Reliability**: $>99\%$ success rate for LLM-generated `#[reagent]` tools compiling on first attempt.
-4. **DevEx Velocity**: Sub-5 minute onboarding time from `cargo add rubedo` to a running Artificer with an embedded Svelte Atelier dashboard.
+4. **DevEx Velocity**: Sub-5 minute onboarding time from `cargo add athanor` to a running Artificer with an embedded Svelte Atelier dashboard.

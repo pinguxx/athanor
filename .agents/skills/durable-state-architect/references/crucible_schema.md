@@ -1,6 +1,6 @@
-# Crucible SQLite Schema Specification
+﻿# Crucible SQLite Schema Specification
 
-This document details the exact SQLite DDL schema used by `rubedo-crucible` (`migrations/01_init.sql`).
+This document details the exact SQLite DDL schema used by `athanor-crucible` (`migrations/01_init.sql`).
 
 ---
 

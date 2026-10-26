@@ -1,14 +1,14 @@
----
+﻿---
 name: durable-state-architect
 description: >-
   Audits and designs event-sourced state machines, SQLite WAL persistence, transactional checkpoints,
-  and tokenized pause/resume workflows for rubedo-opus and rubedo-crucible.
+  and tokenized pause/resume workflows for athanor-opus and athanor-crucible.
   Use when implementing or debugging durable execution DAGs, state hydration, or time-travel replay.
 ---
 
 # Durable State Architect (Crucible & Opus Persistence Guide)
 
-A specialized skill for designing and auditing durable workflow execution, event-sourced state machines, SQLite WAL concurrency, and tokenized pause/resume semantics in **`rubedo-opus`** and **`rubedo-crucible`**.
+A specialized skill for designing and auditing durable workflow execution, event-sourced state machines, SQLite WAL concurrency, and tokenized pause/resume semantics in **`athanor-opus`** and **`athanor-crucible`**.
 
 ---
 
@@ -23,7 +23,7 @@ A specialized skill for designing and auditing durable workflow execution, event
    - Resuming execution (`OpusEngine::resume(run_id, token, payload)`) MUST atomically validate and delete the token from `suspended_tokens` inside a SQLite transaction to prevent double-resumption replay attacks.
 
 3. **High-Concurrency SQLite WAL Mode**:
-   - Connection pools in `rubedo-crucible` must enable Write-Ahead Logging:
+   - Connection pools in `athanor-crucible` must enable Write-Ahead Logging:
      ```sql
      PRAGMA journal_mode = WAL;
      PRAGMA synchronous = NORMAL;

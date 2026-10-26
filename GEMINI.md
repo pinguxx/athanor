@@ -1,6 +1,6 @@
-# Rubedo Workspace Rules & Mandatory Quality Gates
+﻿# Athanor Workspace Rules & Mandatory Quality Gates
 
-See [AGENTS.md](file:///c:/dev/Rubedo/AGENTS.md) for full guidelines.
+See [AGENTS.md](AGENTS.md) for full guidelines.
 
 ## Mandatory Post-Code Task Audit Protocol
 Whenever you finish implementing any code task, feature, crate, or phase deliverable:

@@ -1,15 +1,15 @@
----
+﻿---
 name: security-auditor
 description: >-
-  Audits the security posture, memory boundaries, and execution containment of Rubedo.
+  Audits the security posture, memory boundaries, and execution containment of Athanor.
   Use this skill whenever asked to review security, conduct a vulnerability assessment,
   audit WASM sandboxing, inspect MCP gateway boundaries, check SQLite state durability,
   or evaluate panic prevention (unwrap/expect) and OWASP compliance.
 ---
 
-# Security Auditor (Rubedo Agent Security)
+# Security Auditor (Athanor Agent Security)
 
-A specialized offensive-and-defensive application security auditing skill designed to discover, demonstrate, and remediate vulnerabilities across the **Rubedo** agentic runtime: WASM sandbox isolation, MCP JSON-RPC protocols, SQLite event store persistence, safe Rust invariants, and the embedded Atelier dev server.
+A specialized offensive-and-defensive application security auditing skill designed to discover, demonstrate, and remediate vulnerabilities across the **Athanor** agentic runtime: WASM sandbox isolation, MCP JSON-RPC protocols, SQLite event store persistence, safe Rust invariants, and the embedded Atelier dev server.
 
 ---
 
@@ -24,7 +24,7 @@ A specialized offensive-and-defensive application security auditing skill design
 
 ## 🛡️ Core Vulnerability Vectors & Checklists
 
-### 1. In-Process WASM Isolation (`rubedo-alembic`)
+### 1. In-Process WASM Isolation (`athanor-alembic`)
 - **Fuel Accounting**:
   - Verify `wasm_config.consume_fuel(true)` is unconditionally set.
   - Ensure every execution sets `store.set_fuel(limit)` prior to module invocation.
@@ -35,7 +35,7 @@ A specialized offensive-and-defensive application security auditing skill design
 - **Capability Isolation**:
   - Ensure WASI filesystem access, network sockets, and process environment variables are excluded from untrusted guest modules.
 
-### 2. Bidirectional MCP Gateway (`rubedo-mcp`)
+### 2. Bidirectional MCP Gateway (`athanor-mcp`)
 - **JSON-RPC 2.0 Request Validation**:
   - Strict parsing and validation of incoming JSON-RPC payloads.
   - Ensure remote MCP tool schemas are validated before being registered as native dynamic Reagents.
@@ -44,7 +44,7 @@ A specialized offensive-and-defensive application security auditing skill design
 - **Resource Exhaustion on Duplex Channels**:
   - Enforce timeouts and payload size limits on incoming/outgoing stdio and SSE messages.
 
-### 3. Workflow State Durability & Token Security (`rubedo-crucible` & `rubedo-opus`)
+### 3. Workflow State Durability & Token Security (`athanor-crucible` & `athanor-opus`)
 - **Resume Token Forgery**:
   - Resume tokens must be cryptographically secure UUIDv4 strings.
   - Verify tokens cannot be guessed or forged by external actors.
@@ -55,16 +55,16 @@ A specialized offensive-and-defensive application security auditing skill design
   - All SQLite database queries must use `sqlx` parameterized prepared statements (`?` / `$1`).
   - Zero dynamic SQL string concatenation for table names, column names, or values.
 
-### 4. Rust Invariants & Panic Prevention (`rubedo-core`)
+### 4. Rust Invariants & Panic Prevention (`athanor-core`)
 - **Zero Panics**:
   - Strictly forbid `.unwrap()` and `.expect()` calls in non-test crate sources.
-  - Ensure all external and JSON deserialization failures map gracefully to `ReagentError` or `RubedoError`.
+  - Ensure all external and JSON deserialization failures map gracefully to `ReagentError` or `AthanorError`.
 - **100% Safe Rust**:
   - Maintain zero unannotated `unsafe` blocks. Any unavoidable `unsafe` must include a detailed `// SAFETY:` rationale.
 - **Memory & Concurrency Bounds**:
   - Ensure types passing through `Opus`, `Reagent`, and `Artificer` satisfy `'static + Send + Sync`.
 
-### 5. Embedded Atelier Dev Server (`rubedo-atelier`)
+### 5. Embedded Atelier Dev Server (`athanor-atelier`)
 - **HTTP Security Headers**:
   - `X-Content-Type-Options: nosniff`
   - `X-Frame-Options: DENY`
@@ -83,5 +83,5 @@ powershell -ExecutionPolicy Bypass -File .agents/skills/security-auditor/scripts
 ```
 
 For exhaustive audit checks and risk classifications, consult:
-- [Rubedo Security Checklist](./references/security_checklist.md)
-- [Rubedo Vulnerability Catalog](./references/vulnerability_catalog.md)
+- [Athanor Security Checklist](./references/security_checklist.md)
+- [Athanor Vulnerability Catalog](./references/vulnerability_catalog.md)

@@ -1,6 +1,6 @@
-# RUBEDO: Master Phased Implementation Plan
+﻿# ATHANOR: Master Phased Implementation Plan
 
-This document serves as the master execution roadmap for building the **Rubedo** agentic framework in Rust. Each phase is decomposed into sequential, verifiable subtasks with explicit verification tests and commands.
+This document serves as the master execution roadmap for building the **Athanor** agentic framework in Rust. Each phase is decomposed into sequential, verifiable subtasks with explicit verification tests and commands.
 
 ---
 
@@ -8,13 +8,13 @@ This document serves as the master execution roadmap for building the **Rubedo**
 
 ```mermaid
 flowchart TD
-    Phase1["Phase 1: Core Primitives & Macros<br/>(rubedo-core, rubedo-macros)"]
-    Phase2["Phase 2: Durable Opus & Crucible<br/>(rubedo-opus, rubedo-crucible)"]
-    Phase3["Phase 3: Alembic WASM Sandbox<br/>(rubedo-alembic)"]
-    Phase4["Phase 4: Bidirectional MCP Gateway<br/>(rubedo-mcp)"]
-    Phase5["Phase 5: Spagyric In-Process RAG<br/>(rubedo-rag)"]
-    Phase6["Phase 6: Atelier Dev Studio<br/>(rubedo-atelier)"]
-    Phase7["Phase 7: Evals & Guardrails<br/>(rubedo-evals)"]
+    Phase1["Phase 1: Core Primitives & Macros<br/>(athanor-core, athanor-macros)"]
+    Phase2["Phase 2: Durable Opus & Crucible<br/>(athanor-opus, athanor-crucible)"]
+    Phase3["Phase 3: Alembic WASM Sandbox<br/>(athanor-alembic)"]
+    Phase4["Phase 4: Bidirectional MCP Gateway<br/>(athanor-mcp)"]
+    Phase5["Phase 5: Spagyric In-Process RAG<br/>(athanor-rag)"]
+    Phase6["Phase 6: Atelier Dev Studio<br/>(athanor-atelier)"]
+    Phase7["Phase 7: Evals & Guardrails<br/>(athanor-evals)"]
     Phase8["Phase 8: Examples & Production Polish<br/>(examples/*, release)"]
 
     Phase1 --> Phase2
@@ -35,69 +35,69 @@ flowchart TD
 
 - [x] **Phase 1: Foundation & `#[reagent]` Macro Synthesizer**
   - [x] 1.1 Root Cargo Workspace initialization (`Cargo.toml`)
-  - [x] 1.2 `rubedo-core` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
+  - [x] 1.2 `athanor-core` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
   - [x] 1.3 `Reagent` trait & `ReagentError` error model implementation
   - [x] 1.4 `Artificer` struct, `Envelope`, and `AthanorContext` execution memory
-  - [x] 1.5 `rubedo-macros` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
+  - [x] 1.5 `athanor-macros` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
   - [x] 1.6 `#[reagent]` proc-macro: AST parsing (`syn::ItemFn`), doc extraction, schema generation (`schemars`), and code emission
   - [x] 1.7 Phase 1 Unit and Integration Test Suite
-  - [x] 1.8 Verify Phase 1: `cargo test -p rubedo-core -p rubedo-macros`
+  - [x] 1.8 Verify Phase 1: `cargo test -p athanor-core -p athanor-macros`
 
 - [x] **Phase 2: Durable Opus & Crucible Persistence**
-  - [x] 2.1 `rubedo-crucible` crate scaffolding with `sqlx` (SQLite)
+  - [x] 2.1 `athanor-crucible` crate scaffolding with `sqlx` (SQLite)
   - [x] 2.2 Embedded SQLite migrations (`01_init.sql`: `opus_runs`, `vessel_events`, `suspended_tokens`)
   - [x] 2.3 `CrucibleEngine` implementation (run state persistence, transition logging, checkpointing)
-  - [x] 2.4 `rubedo-opus` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
+  - [x] 2.4 `athanor-opus` crate scaffolding (`Cargo.toml`, `src/lib.rs`)
   - [x] 2.5 `Vessel` trait, `VesselStatus`, and `VesselError` models
   - [x] 2.6 `OpusBuilder` and DAG topology execution loop
   - [x] 2.7 Suspension state machine: `VesselStatus::Suspended { resume_token }`
   - [x] 2.8 Resumption engine: `OpusEngine::resume(run_id, token, payload)`
   - [x] 2.9 Phase 2 Integration Test (3-step workflow suspension & resumption)
-  - [x] 2.10 Verify Phase 2: `cargo test -p rubedo-crucible -p rubedo-opus`
+  - [x] 2.10 Verify Phase 2: `cargo test -p athanor-crucible -p athanor-opus`
 
 - [x] **Phase 3: Alembic WASM Sandbox Runtime**
-  - [x] 3.1 `rubedo-alembic` crate scaffolding with `wasmtime` and `wasmtime-wasi`
+  - [x] 3.1 `athanor-alembic` crate scaffolding with `wasmtime` and `wasmtime-wasi`
   - [x] 3.2 `AlembicConfig` definition (`max_memory_bytes`, `fuel_limit`)
   - [x] 3.3 `AlembicSandbox` engine initialization with fuel metering enabled
   - [x] 3.4 Host-guest linear memory bridge (JSON payload exchange protocol)
-  - [x] 3.5 Dynamic `WasmReagent` wrapper implementing `rubedo_core::Reagent`
+  - [x] 3.5 Dynamic `WasmReagent` wrapper implementing `athanor_core::Reagent`
   - [x] 3.6 Fuel exhaustion & memory limit abort handling
   - [x] 3.7 Phase 3 Test: Infinite loop execution halted in $<15$ ms
-  - [x] 3.8 Verify Phase 3: `cargo test -p rubedo-alembic`
+  - [x] 3.8 Verify Phase 3: `cargo test -p athanor-alembic`
 
 - [x] **Phase 4: Bidirectional Model Context Protocol (MCP) Gateway**
-  - [x] 4.1 `rubedo-mcp` crate scaffolding with JSON-RPC 2.0 primitives
+  - [x] 4.1 `athanor-mcp` crate scaffolding with JSON-RPC 2.0 primitives
   - [x] 4.2 Transport abstractions: stdio and in-memory duplex channels
   - [x] 4.3 `McpClient` implementation: tool discovery (`tools/list`) and dynamic `Reagent` synthesis
   - [x] 4.4 `McpServer` implementation: native Reagent registry exposure and `tools/call` invocation handler
   - [x] 4.5 Phase 4 In-Memory Duplex Test: McpServer exposes native tool, McpClient discovers & executes it
-  - [x] 4.6 Verify Phase 4: `cargo test -p rubedo-mcp`
+  - [x] 4.6 Verify Phase 4: `cargo test -p athanor-mcp`
 
 - [x] **Phase 5: Spagyric In-Process Vector Store (RAG)**
-  - [x] 5.1 `rubedo-rag` crate scaffolding with `fastembed` and `lancedb`
+  - [x] 5.1 `athanor-rag` crate scaffolding with `fastembed` and `lancedb`
   - [x] 5.2 Document splitters: semantic and recursive text chunking
   - [x] 5.3 `SpagyricIndex` implementation with automatic local embedding initialization (`BGESmallENV15`)
   - [x] 5.4 Document ingestion (`add_documents`) and vector search (`search`)
   - [x] 5.5 Dynamic `SearchReagent` generation for Artificers
   - [x] 5.6 Phase 5 Semantic Test: synonym query matches target document with cosine similarity $>0.70$
-  - [x] 5.7 Verify Phase 5: `cargo test -p rubedo-rag`
+  - [x] 5.7 Verify Phase 5: `cargo test -p athanor-rag`
 
 - [x] **Phase 6: Atelier Dev Studio & Observability Server**
-  - [x] 6.1 `rubedo-atelier` crate scaffolding with `axum`, `tower-http`, and `rust-embed`
+  - [x] 6.1 `athanor-atelier` crate scaffolding with `axum`, `tower-http`, and `rust-embed`
   - [x] 6.2 Telemetry pipeline: custom `tracing_subscriber::Layer` feeding Tokio broadcast channel
   - [x] 6.3 HTTP API endpoints (`GET /api/registry`, `GET /api/events` SSE, `POST /api/opus/:run_id/resume`)
   - [x] 6.4 Static asset handler (`GET /*`) serving embedded Svelte UI from memory
   - [x] 6.5 Svelte/Vite UI minimal visualizer shell for live traces and checkpoint inspection
   - [x] 6.6 Phase 6 Integration Test: Ephemeral server start & registry endpoint validation
-  - [x] 6.7 Verify Phase 6: `cargo test -p rubedo-atelier`
+  - [x] 6.7 Verify Phase 6: `cargo test -p athanor-atelier`
 
 - [x] **Phase 7: Verification Harness & Evaluation Guardrails**
-  - [x] 7.1 `rubedo-evals` crate scaffolding
+  - [x] 7.1 `athanor-evals` crate scaffolding
   - [x] 7.2 Deterministic scoring metrics: `ExactMatch`, `LevenshteinDistance`, `JsonGrammarValidator`
   - [x] 7.3 Model-graded scoring harness: `LlmJudge` (factual correctness, toxicity, tone)
   - [x] 7.4 `#[artificer_test]` procedural macro for benchmark runner
   - [x] 7.5 Phase 7 Verification Test: simulated failure conditions return non-zero exit codes below threshold
-  - [x] 7.6 Verify Phase 7: `cargo test -p rubedo-evals`
+  - [x] 7.6 Verify Phase 7: `cargo test -p athanor-evals`
 
 - [x] **Phase 8: Reference Examples & Showcase Applications**
   - [x] 8.1 Example 1: `basic-artificer` (ReAct agent reasoning with custom Reagents)
@@ -110,71 +110,71 @@ flowchart TD
 ## Detailed Phase Specifications
 
 ### Phase 1: Foundation & `#[reagent]` Macro Synthesizer
-- **Primary Target Crates**: `crates/rubedo-core`, `crates/rubedo-macros`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-core`, `crates/athanor-macros`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: `#[reagent]` generates valid JSON schemas; `transmute()` correctly validates inputs against schema; zero lifetime annotations required.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-core -p rubedo-macros
+  cargo test -p athanor-core -p athanor-macros
   ```
 
 ### Phase 2: Durable Opus & Crucible Persistence
-- **Primary Target Crates**: `crates/rubedo-opus`, `crates/rubedo-crucible`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-opus`, `crates/athanor-crucible`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Workflows can halt at any step, persist state to SQLite, yield a token, and cleanly resume from token without state corruption.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-crucible -p rubedo-opus
+  cargo test -p athanor-crucible -p athanor-opus
   ```
 
 ### Phase 3: Alembic WASM Sandbox Runtime
-- **Primary Target Crates**: `crates/rubedo-alembic`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-alembic`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Untrusted guest WASM modules run with zero filesystem/network access; infinite loops abort within 15ms upon fuel exhaustion.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-alembic
+  cargo test -p athanor-alembic
   ```
 
 ### Phase 4: Bidirectional Model Context Protocol (MCP) Gateway
-- **Primary Target Crates**: `crates/rubedo-mcp`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-mcp`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Internal reagents can be served over MCP stdio/SSE; external MCP servers can be consumed seamlessly as dynamic `dyn Reagent` instances.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-mcp
+  cargo test -p athanor-mcp
   ```
 
 ### Phase 5: Spagyric RAG & In-Process Vector Store
-- **Primary Target Crates**: `crates/rubedo-rag`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-rag`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Documents split, embedded via `fastembed-rs` (BGESmallENV15), stored in `lancedb`, and queried with cosine similarity $>0.70$ completely in-process.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-rag
+  cargo test -p athanor-rag
   ```
 
 ### Phase 6: Atelier Dev Studio & Observability Server `[COMPLETED]`
-- **Primary Target Crates**: `crates/rubedo-atelier`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-atelier`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Embedded Axum server starts, serves static frontend assets via `rust-embed`, streams live SSE telemetry, and exposes checkpoint replay API.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-atelier
+  cargo test -p athanor-atelier
   ```
 
 ### Phase 7: Verification Harness & Evaluation Guardrails `[COMPLETED]`
-- **Primary Target Crates**: `crates/rubedo-evals`
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Primary Target Crates**: `crates/athanor-evals`
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: Automated benchmark evaluation suite detects regressions, scores semantic criteria, and enforces token budgets.
 - **Verification Command**:
   ```bash
-  cargo test -p rubedo-evals
+  cargo test -p athanor-evals
   ```
 
 ### Phase 8: Reference Examples & Workspace Release `[COMPLETED]`
 - **Primary Target**: `examples/*` and root workspace validation
-- **Specification**: [RUBEDO_SPEC.md](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)
+- **Specification**: [ATHANOR_SPEC.md](ATHANOR_SPEC.md)
 - **Exit Criteria**: All three reference examples build and run without warnings; `cargo test --all` passes 100%.
 - **Verification Command**:
   ```bash

@@ -1,15 +1,15 @@
----
+﻿---
 name: critical-code-reviewer
 description: >-
-  Conducts rigorous, uncompromising, and adversarial code reviews for Rubedo.
+  Conducts rigorous, uncompromising, and adversarial code reviews for Athanor.
   Use this skill whenever asked to review, audit, critique, inspect, or sanity-check
   Rust agent code, proc-macros, workflow engines, WASM runtimes, MCP bridges, or UI components.
   Identifies edge-case failures, concurrency hazards, memory safety violations, and architectural flaws.
 ---
 
-# Critical Code Reviewer (Rubedo Systems Reviewer)
+# Critical Code Reviewer (Athanor Systems Reviewer)
 
-An uncompromising, adversarial review skill designed to uncover deep bugs, concurrency hazards, memory safety violations, macro compilation failures, and performance regressions across the **Rubedo** agentic framework.
+An uncompromising, adversarial review skill designed to uncover deep bugs, concurrency hazards, memory safety violations, macro compilation failures, and performance regressions across the **Athanor** agentic framework.
 
 ---
 
@@ -33,13 +33,13 @@ An uncompromising, adversarial review skill designed to uncover deep bugs, concu
 
 ### Phase 1: Scope & Diff Reconnaissance
 1. Identify all changed files and understand the intent of the change.
-2. Map the blast radius: Which crates (`rubedo-core`, `rubedo-opus`, `rubedo-crucible`, `rubedo-alembic`, `rubedo-mcp`, `rubedo-rag`, `rubedo-atelier`) depend on the modified code?
+2. Map the blast radius: Which crates (`athanor-core`, `athanor-opus`, `athanor-crucible`, `athanor-alembic`, `athanor-mcp`, `athanor-rag`, `athanor-atelier`) depend on the modified code?
 3. Check for unintended modifications or deleted safeguards (e.g., dropped trait bounds, relaxed fuel limits).
 4. Run the helper script:
    - PowerShell: `./scripts/inspect_diff.ps1`
 
 ### Phase 2: Invariants & Architectural Tenets
-Inspect code against Rubedo's core architectural tenets:
+Inspect code against Athanor's core architectural tenets:
 - **Tenet 1 (Zero Lifetime Annotations)**: Do all public types in macros (`#[reagent]`, `opus!`) satisfy `'static + Send + Sync` via value semantics? Can an autonomous agent generate valid tool code without lifetime borrow errors?
 - **Tenet 2 (Deterministic Checkpointing)**: Does the workflow commit state to SQLite before and after each Vessel step? Are resume tokens unforgeable UUIDv4 strings? Can execution suspend and resume cleanly?
 - **Tenet 3 (In-Process Containment)**: Do dynamic Reagents execute inside isolated `Wasmtime` sandboxes with strict memory envelopes ($\le 64$MB) and instruction fuel counters ($\le 100$M)?
@@ -73,7 +73,7 @@ Inspect code against Rubedo's core architectural tenets:
 ---
 
 ## 📋 Comprehensive Domain Checklists
-- [Rubedo 50-Point Review Checklist](./references/checklist.md) — Exhaustive inspection checklist across core traits, durable DAGs, WASM sandboxes, MCP gateways, and Atelier.
+- [Athanor 50-Point Review Checklist](./references/checklist.md) — Exhaustive inspection checklist across core traits, durable DAGs, WASM sandboxes, MCP gateways, and Atelier.
 - [Severity Classification Rubric](./references/severity-rubric.md) — Objective definitions for Blocker vs Major vs Minor ratings.
 
 ---
@@ -94,17 +94,17 @@ Inspect code against Rubedo's core architectural tenets:
 
 | Severity | File & Location | Summary | Category |
 |:---|:---|:---|:---|
-| 🔴 BLOCKER | `crates/rubedo-opus/src/engine.rs#L42` | Lock held across `.await` point creates deadlock hazard | Concurrency |
-| 🟠 MAJOR | `crates/rubedo-crucible/src/lib.rs#L80` | Checkpoint commit not wrapped in SQLite transaction | Durability |
-| 🟡 MINOR | `crates/rubedo-core/src/reagent.rs#L55` | Redundant clone of input Value | Performance |
-| 🔵 NIT | `crates/rubedo-macros/src/lib.rs#L92` | Add docstring clarifying PascalCase conversion edge case | Documentation |
+| 🔴 BLOCKER | `crates/athanor-opus/src/engine.rs#L42` | Lock held across `.await` point creates deadlock hazard | Concurrency |
+| 🟠 MAJOR | `crates/athanor-crucible/src/lib.rs#L80` | Checkpoint commit not wrapped in SQLite transaction | Durability |
+| 🟡 MINOR | `crates/athanor-core/src/reagent.rs#L55` | Redundant clone of input Value | Performance |
+| 🔵 NIT | `crates/athanor-macros/src/lib.rs#L92` | Add docstring clarifying PascalCase conversion edge case | Documentation |
 
 ---
 
 ## 💥 Detailed Findings & Counterexamples
 
 ### 🔴 [BLOCKER] Lock Guard Held Across Async Await
-- **Location**: [`crates/rubedo-opus/src/engine.rs#L42-L55`](file:///c:/dev/Rubedo/crates/rubedo-opus/src/engine.rs#L42-L55)
+- **Location**: [`crates/athanor-opus/src/engine.rs#L42-L55`](crates/athanor-opus/src/engine.rs#L42-L55)
 - **Vulnerability / Failure Mechanism**: Holding a synchronous `std::sync::MutexGuard` across an `.await` boundary causes deadlocks and violates `Send` bounds on async futures.
 - **Remediation**:
 ```diff

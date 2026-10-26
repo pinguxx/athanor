@@ -1,10 +1,10 @@
-# Rubedo Security Audit Checklist & Verification Guide
+﻿# Athanor Security Audit Checklist & Verification Guide
 
-This checklist provides a systematic methodology for verifying the security posture of the **Rubedo** agentic runtime across its Rust crates and embedded visualizer.
+This checklist provides a systematic methodology for verifying the security posture of the **Athanor** agentic runtime across its Rust crates and embedded visualizer.
 
 ---
 
-## 1. WASM Sandboxing & In-Process Isolation (`rubedo-alembic`)
+## 1. WASM Sandboxing & In-Process Isolation (`athanor-alembic`)
 
 - [ ] **Instruction Fuel Metering**:
   - `wasm_config.consume_fuel(true)` is enabled when constructing the Wasmtime engine.
@@ -20,7 +20,7 @@ This checklist provides a systematic methodology for verifying the security post
 
 ---
 
-## 2. MCP Gateway & JSON-RPC Protocols (`rubedo-mcp`)
+## 2. MCP Gateway & JSON-RPC Protocols (`athanor-mcp`)
 
 - [ ] **Protocol Boundary & Serialization**:
   - Complies strictly with JSON-RPC 2.0 schema format.
@@ -35,7 +35,7 @@ This checklist provides a systematic methodology for verifying the security post
 
 ---
 
-## 3. Workflow State Durability & Tokens (`rubedo-crucible` & `rubedo-opus`)
+## 3. Workflow State Durability & Tokens (`athanor-crucible` & `athanor-opus`)
 
 - [ ] **Resume Token Generation & Security**:
   - Resume tokens are minted using `uuid::Uuid::new_v4()` (128-bit cryptographic entropy).
@@ -49,7 +49,7 @@ This checklist provides a systematic methodology for verifying the security post
 
 ---
 
-## 4. Rust Invariants & Code Hygiene (`rubedo-core`)
+## 4. Rust Invariants & Code Hygiene (`athanor-core`)
 
 - [ ] **Panic-Free Production Paths**:
   - Zero `.unwrap()` or `.expect()` calls in non-test crate sources (`crates/*/src/`).
@@ -64,7 +64,7 @@ This checklist provides a systematic methodology for verifying the security post
 
 ---
 
-## 5. Embedded Atelier Dev Server (`rubedo-atelier`)
+## 5. Embedded Atelier Dev Server (`athanor-atelier`)
 
 - [ ] **Network Binding**:
   - Server binds to `127.0.0.1` by default, preventing unintended exposure on local networks.

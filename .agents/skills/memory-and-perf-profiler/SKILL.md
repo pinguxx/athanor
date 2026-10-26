@@ -1,14 +1,14 @@
----
+﻿---
 name: memory-and-perf-profiler
 description: >-
-  Profiles resident set size (RSS) memory footprint and execution latency for Rubedo.
+  Profiles resident set size (RSS) memory footprint and execution latency for Athanor.
   Enforces the Tenet 5 sub-40MB memory SLA and benchmarks resume latency (<10ms).
   Use when validating memory consumption or profiling long-running agent workloads.
 ---
 
 # Memory & Performance Profiler (Tenet 5 SLA Enforcer)
 
-A specialized skill for tracking, auditing, and optimizing memory consumption and execution latency across the **Rubedo** agentic framework. Validates adherence to Core Tenet 5: **Zero External Infrastructure & Sub-40MB Resident Memory Footprint**.
+A specialized skill for tracking, auditing, and optimizing memory consumption and execution latency across the **Athanor** agentic framework. Validates adherence to Core Tenet 5: **Zero External Infrastructure & Sub-40MB Resident Memory Footprint**.
 
 ---
 
@@ -29,7 +29,7 @@ A specialized skill for tracking, auditing, and optimizing memory consumption an
 ### 1. Process Working Set (RSS) Measurement
 On Windows, measured via PowerShell `Get-Process`:
 ```powershell
-$proc = Get-Process -Name "my_rubedo_binary"
+$proc = Get-Process -Name "my_athanor_binary"
 $rssMb = [math]::Round($proc.WorkingSet64 / 1MB, 2)
 if ($rssMb -gt 40.0) {
     Write-Warning "SLA VIOLATION: Process RSS is ${rssMb}MB (Exceeds 40MB limit)"

@@ -1,14 +1,14 @@
 [workspace]
 members = [
-    "crates/rubedo-core",
-    "crates/rubedo-macros",
-    "crates/rubedo-crucible",
-    "crates/rubedo-opus",
-    "crates/rubedo-alembic",
-    "crates/rubedo-mcp",
-    "crates/rubedo-rag",
-    "crates/rubedo-atelier",
-    "crates/rubedo-evals",
+    "crates/athanor-core",
+    "crates/athanor-macros",
+    "crates/athanor-crucible",
+    "crates/athanor-opus",
+    "crates/athanor-alembic",
+    "crates/athanor-mcp",
+    "crates/athanor-rag",
+    "crates/athanor-atelier",
+    "crates/athanor-evals",
     "examples/basic-artificer",
     "examples/durable-transmutation",
     "examples/sandboxed-alembic",
@@ -20,9 +20,9 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.80"
 license = "MIT OR Apache-2.0"
-authors = ["Rubedo Contributors"]
-repository = "https://github.com/rubedo-rs/rubedo"
-homepage = "https://github.com/rubedo-rs/rubedo"
+authors = ["Athanor Contributors"]
+repository = "https://github.com/athanor-rs/athanor"
+homepage = "https://github.com/athanor-rs/athanor"
 readme = "README.md"
 
 [workspace.dependencies]
@@ -49,14 +49,12 @@ uuid = { version = "1.10", features = ["v4", "serde"] }
 futures = "0.3"
 
 # Internal workspace crates
-rubedo-core = { path = "crates/rubedo-core", version = "0.1.0" }
-rubedo-macros = { path = "crates/rubedo-macros", version = "0.1.0" }
-rubedo-crucible = { path = "crates/rubedo-crucible", version = "0.1.0" }
-rubedo-opus = { path = "crates/rubedo-opus", version = "0.1.0" }
-rubedo-alembic = { path = "crates/rubedo-alembic", version = "0.1.0" }
-rubedo-mcp = { path = "crates/rubedo-mcp", version = "0.1.0" }
-rubedo-rag = { path = "crates/rubedo-rag", version = "0.1.0" }
-rubedo-atelier = { path = "crates/rubedo-atelier", version = "0.1.0" }
-rubedo-evals = { path = "crates/rubedo-evals", version = "0.1.0" }
-
-
+athanor-core = { path = "crates/athanor-core", version = "0.1.0" }
+athanor-macros = { path = "crates/athanor-macros", version = "0.1.0" }
+athanor-crucible = { path = "crates/athanor-crucible", version = "0.1.0" }
+athanor-opus = { path = "crates/athanor-opus", version = "0.1.0" }
+athanor-alembic = { path = "crates/athanor-alembic", version = "0.1.0" }
+athanor-mcp = { path = "crates/athanor-mcp", version = "0.1.0" }
+athanor-rag = { path = "crates/athanor-rag", version = "0.1.0" }
+athanor-atelier = { path = "crates/athanor-atelier", version = "0.1.0" }
+athanor-evals = { path = "crates/athanor-evals", version = "0.1.0" }

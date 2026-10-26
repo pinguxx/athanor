@@ -1,7 +1,7 @@
 //! # Example: Durable Transmutation Workflow
 //!
-//! Demonstrates building an event-sourced, durable workflow with [`rubedo_opus::Opus`]
-//! and [`rubedo_crucible::CrucibleEngine`].
+//! Demonstrates building an event-sourced, durable workflow with [`athanor_opus::Opus`]
+//! and [`athanor_crucible::CrucibleEngine`].
 //!
 //! Illustrates:
 //! 1. Multi-step directed acyclic graph (DAG) state transitions.
@@ -16,11 +16,11 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use serde_json::json;
 
-use rubedo_crucible::CrucibleEngine;
-use rubedo_opus::context::OpusContext;
-use rubedo_opus::engine::{OpusEngine, OpusRunResult};
-use rubedo_opus::vessel::{Vessel, VesselError, VesselStatus};
-use rubedo_opus::workflow::Opus;
+use athanor_crucible::CrucibleEngine;
+use athanor_opus::context::OpusContext;
+use athanor_opus::engine::{OpusEngine, OpusRunResult};
+use athanor_opus::vessel::{Vessel, VesselError, VesselStatus};
+use athanor_opus::workflow::Opus;
 
 // ---------------------------------------------------------------------------
 // 1. Workflow Vessel Step Definitions
@@ -47,7 +47,9 @@ impl Vessel for Step1DraftProposal {
         ctx.set("raw_weight_oz", raw_weight_oz)
             .map_err(|e| VesselError::Execution(e.to_string()))?;
 
-        println!("   [Step 1] Proposal drafted: {raw_weight_oz} oz of {base_metal} (Batch: {batch_id})");
+        println!(
+            "   [Step 1] Proposal drafted: {raw_weight_oz} oz of {base_metal} (Batch: {batch_id})"
+        );
 
         Ok(VesselStatus::Transmuted {
             output: json!({
@@ -104,9 +106,9 @@ impl Vessel for Step3CompleteTransmutation {
 
         // Extract the externally injected resume payload
         let (approver, purity) = {
-            let payload = ctx
-                .resume_payload()
-                .ok_or_else(|| VesselError::InvalidState("Missing required approval payload".into()))?;
+            let payload = ctx.resume_payload().ok_or_else(|| {
+                VesselError::InvalidState("Missing required approval payload".into())
+            })?;
 
             let approver = payload
                 .get("approver")
@@ -151,7 +153,7 @@ impl Vessel for Step3CompleteTransmutation {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     println!("============================================================");
-    println!(" ⚗ RUBEDO: Durable Transmutation & Token Resumption Example");
+    println!(" ⚗ ATHANOR: Durable Transmutation & Token Resumption Example");
     println!("============================================================\n");
 
     // 1. Connect to SQLite persistence engine
@@ -209,7 +211,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     match final_outcome {
         OpusRunResult::Transmuted { final_state, .. } => {
             println!("   Workflow successfully transmuted final state!");
-            println!("   Final State Snapshot:\n{}\n", serde_json::to_string_pretty(&final_state)?);
+            println!(
+                "   Final State Snapshot:\n{}\n",
+                serde_json::to_string_pretty(&final_state)?
+            );
         }
         other => return Err(format!("Unexpected outcome: {other:?}").into()),
     }

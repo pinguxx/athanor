@@ -1,30 +1,30 @@
-# RUBEDO: Subsystem Architecture & Design Patterns
+﻿# ATHANOR: Subsystem Architecture & Design Patterns
 
 ## Architectural Overview
 
-Rubedo is structured as a modular, high-cohesion Rust workspace. The core philosophy centers on **alchemical transmutation**: converting chaotic, non-deterministic model completions and tool interactions into deterministic, verifiable, durable state transitions.
+Athanor is structured as a modular, high-cohesion Rust workspace. The core philosophy centers on **alchemical transmutation**: converting chaotic, non-deterministic model completions and tool interactions into deterministic, verifiable, durable state transitions.
 
 ```mermaid
 graph TD
     subgraph ClientAndUI ["Observability & Interfaces"]
-        AtelierUI["Atelier Svelte UI"] <-->|SSE & REST| AtelierServer["rubedo-atelier: Axum Dev Server"]
-        ExternalMCPClients["External MCP Clients (e.g. Claude Desktop, Cursor)"] <-->|stdio / SSE| McpServer["rubedo-mcp: McpServer"]
+        AtelierUI["Atelier Svelte UI"] <-->|SSE & REST| AtelierServer["athanor-atelier: Axum Dev Server"]
+        ExternalMCPClients["External MCP Clients (e.g. Claude Desktop, Cursor)"] <-->|stdio / SSE| McpServer["athanor-mcp: McpServer"]
     end
 
     subgraph CoreAgenticRuntime ["Agentic Core"]
-        Artificer["rubedo-core: Artificer"] -->|Executes| ReagentTrait["Reagent Trait Contract"]
-        MacroGen["rubedo-macros: #[reagent]"] -->|Generates| ReagentTrait
-        OpusEngine["rubedo-opus: OpusEngine"] -->|Orchestrates| VesselTrait["Vessel Execution Steps"]
+        Artificer["athanor-core: Artificer"] -->|Executes| ReagentTrait["Reagent Trait Contract"]
+        MacroGen["athanor-macros: #[reagent]"] -->|Generates| ReagentTrait
+        OpusEngine["athanor-opus: OpusEngine"] -->|Orchestrates| VesselTrait["Vessel Execution Steps"]
     end
 
     subgraph IsolationAndInterop ["Security & Interoperability"]
-        ReagentTrait -->|Untrusted Tool| AlembicSandbox["rubedo-alembic: Wasmtime Sandbox"]
-        ReagentTrait -->|Remote Tool| McpClient["rubedo-mcp: McpClient"]
-        ReagentTrait -->|Knowledge Retrieval| SpagyricIndex["rubedo-rag: SpagyricIndex"]
+        ReagentTrait -->|Untrusted Tool| AlembicSandbox["athanor-alembic: Wasmtime Sandbox"]
+        ReagentTrait -->|Remote Tool| McpClient["athanor-mcp: McpClient"]
+        ReagentTrait -->|Knowledge Retrieval| SpagyricIndex["athanor-rag: SpagyricIndex"]
     end
 
     subgraph StateAndStorage ["Durable State Store"]
-        VesselTrait -->|State Commits| CrucibleEngine["rubedo-crucible: SQLite Event Store"]
+        VesselTrait -->|State Commits| CrucibleEngine["athanor-crucible: SQLite Event Store"]
         SpagyricIndex -->|Vector Storage| LanceDB["Embedded LanceDB"]
     end
 
@@ -39,7 +39,7 @@ graph TD
 In conventional Rust development, asynchronous agent workflows and dynamic tool registries frequently run into complex borrow checker lifetime errors (`'a`, `'static`, non-owned references across `async` boundaries). For autonomous code-generation agents (such as LLMs writing tools at runtime), managing lifetimes in procedural macros causes frequent compile-time failures.
 
 ### Solution
-Rubedo eliminates all lifetime parameters from public traits and macros:
+Athanor eliminates all lifetime parameters from public traits and macros:
 - **Owned Value Semantics**: Tool inputs and outputs pass as owned `serde_json::Value` or owned deserialized structs.
 - **Envelope Wrapping**: Internal state transitions are wrapped in `Arc` envelopes.
 - **Universal `'static + Send + Sync`**: Every `Reagent` and `Vessel` implementation satisfies `'static + Send + Sync`.
@@ -60,7 +60,7 @@ pub trait Reagent: Send + Sync + 'static {
 
 ## 2. Event-Sourced Workflow Engine (Opus & Crucible)
 
-Workflows in Rubedo are represented as directed acyclic graphs (DAGs) of execution steps termed **Vessels**.
+Workflows in Athanor are represented as directed acyclic graphs (DAGs) of execution steps termed **Vessels**.
 
 ### 2.1 Vessel Lifecycle State Machine
 
@@ -78,7 +78,7 @@ stateDiagram-v2
 
 ### 2.2 Deterministic Checkpointing
 
-Before and after every Vessel execution, state transitions are recorded into `rubedo-crucible` via SQLite event sourcing:
+Before and after every Vessel execution, state transitions are recorded into `athanor-crucible` via SQLite event sourcing:
 1. **Pre-execution checkpoint**: Records the incoming state snapshot and changes status to `Active`.
 2. **Post-execution checkpoint**:
    - If output is `Transmuted`, writes the output payload into `vessel_events` and marks state `Completed`.
@@ -89,7 +89,7 @@ Before and after every Vessel execution, state transitions are recorded into `ru
 
 ## 3. In-Process Sandboxing (Alembic)
 
-Untrusted or model-generated tools cannot be permitted direct host access. Instead of spawning heavy Docker containers, `rubedo-alembic` embeds WebAssembly execution via `wasmtime`:
+Untrusted or model-generated tools cannot be permitted direct host access. Instead of spawning heavy Docker containers, `athanor-alembic` embeds WebAssembly execution via `wasmtime`:
 
 - **Linear Memory Envelopes**: Guest WASM modules are constrained to a configurable memory ceiling (default: 64 MB).
 - **Instruction Fuel Metering**: Every execution is assigned a fixed fuel allocation (default: 100,000,000 instructions). Infinite loops consume fuel and abort deterministically within $<15$ milliseconds.
@@ -99,16 +99,16 @@ Untrusted or model-generated tools cannot be permitted direct host access. Inste
 
 ## 4. Universal Interoperability (Bidirectional MCP)
 
-Rubedo provides bidirectional Model Context Protocol (MCP) support:
+Athanor provides bidirectional Model Context Protocol (MCP) support:
 
 ```mermaid
 sequenceDiagram
     participant HostApp as Host Application
-    participant McpGateway as rubedo-mcp
+    participant McpGateway as athanor-mcp
     participant ExternalClient as Claude Desktop / Cursor
     participant ExternalMCP as Remote MCP Server
 
-    Note over HostApp,ExternalClient: Mode 1: Rubedo as MCP Server
+    Note over HostApp,ExternalClient: Mode 1: Athanor as MCP Server
     ExternalClient->>McpGateway: tools/list (JSON-RPC)
     McpGateway-->>ExternalClient: Discovered Reagents & Schemas
     ExternalClient->>McpGateway: tools/call { "name": "get_stock_price", "arguments": {...} }
@@ -116,7 +116,7 @@ sequenceDiagram
     HostApp-->>McpGateway: Ok(output)
     McpGateway-->>ExternalClient: JSON-RPC Result
 
-    Note over HostApp,ExternalMCP: Mode 2: Rubedo as MCP Client
+    Note over HostApp,ExternalMCP: Mode 2: Athanor as MCP Client
     HostApp->>McpGateway: McpClient::connect(transport)
     McpGateway->>ExternalMCP: tools/list
     ExternalMCP-->>McpGateway: Tool schemas
@@ -127,7 +127,7 @@ sequenceDiagram
 
 ## 5. Spagyric Embedded RAG
 
-`rubedo-rag` eliminates external vector database infrastructure:
+`athanor-rag` eliminates external vector database infrastructure:
 - **Local Embeddings**: Runs `fastembed-rs` (model: `BGESmallENV15`) directly in-process using ONNX Runtime.
 - **Embedded Vector Storage**: Uses `LanceDB` in local embedded file mode.
 - **Semantic Chunking**: Automatically splits technical text using recursive delimiter boundaries while preserving markdown semantics.
@@ -137,7 +137,7 @@ sequenceDiagram
 
 ## 6. Atelier Dev Studio & Observability Architecture
 
-`rubedo-atelier` compiles an Axum web server and pre-built Svelte/Vite UI into the host application binary:
+`athanor-atelier` compiles an Axum web server and pre-built Svelte/Vite UI into the host application binary:
 - **Rust-Embed**: Static assets are bundled directly into the executable binary via `rust-embed`.
 - **Live SSE Streaming**: A custom `tracing_subscriber::Layer` captures structured workflow events and broadcasts them across a `tokio::sync::broadcast` channel to active browser clients.
 - **Time-Travel Inspector**: Developers can inspect the historical input and output payloads of each Vessel step, edit payloads, and re-trigger runs directly from the UI.

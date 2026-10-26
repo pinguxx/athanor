@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Master Post-Task Audit Runner for Rubedo
+  Master Post-Task Audit Runner for Athanor
 .DESCRIPTION
   Executes the core engineering and security audit pipeline:
   1. Critical Code Reviewer: inspects git diff and assesses blast radius
@@ -14,7 +14,7 @@ param(
 $RepoRoot = (Get-Item -Path "$PSScriptRoot\..\..").FullName
 
 Write-Host "======================================================================" -ForegroundColor Magenta
-Write-Host " ⚗  RUBEDO MASTER POST-TASK AUDIT PIPELINE" -ForegroundColor Magenta
+Write-Host " ⚗  ATHANOR MASTER POST-TASK AUDIT PIPELINE" -ForegroundColor Magenta
 Write-Host "======================================================================" -ForegroundColor Magenta
 Write-Host "Repository: $RepoRoot" -ForegroundColor Gray
 Write-Host ""

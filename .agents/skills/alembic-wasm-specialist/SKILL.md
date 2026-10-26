@@ -1,14 +1,14 @@
----
+﻿---
 name: alembic-wasm-specialist
 description: >-
   Specialist in Wasmtime 25.0, WebAssembly Text format (.wat), host-guest linear memory exchange,
-  fuel-metered execution, and zero-access WASI sandboxing for rubedo-alembic.
+  fuel-metered execution, and zero-access WASI sandboxing for athanor-alembic.
   Use when designing or debugging WASM isolation, host memory bridges, or untrusted tool execution.
 ---
 
 # Alembic WASM Specialist (Wasmtime Sandboxing Guide)
 
-A specialized skill for engineering, verifying, and debugging in-process WebAssembly sandboxes using **Wasmtime 25.0** and **wasmtime-wasi**. Governs untrusted and model-generated Reagent execution within `rubedo-alembic`.
+A specialized skill for engineering, verifying, and debugging in-process WebAssembly sandboxes using **Wasmtime 25.0** and **wasmtime-wasi**. Governs untrusted and model-generated Reagent execution within `athanor-alembic`.
 
 ---
 
@@ -67,7 +67,7 @@ Host                                                      Guest WASM Module
 
 ```rust
 use wasmtime::*;
-use rubedo_core::reagent::ReagentError;
+use athanor_core::reagent::ReagentError;
 
 let mut config = Config::new();
 config.consume_fuel(true);

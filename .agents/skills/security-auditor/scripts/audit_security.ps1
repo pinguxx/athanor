@@ -1,8 +1,8 @@
-<#
+﻿<#
 .SYNOPSIS
-  Automated Security Posture Auditor for Rubedo
+  Automated Security Posture Auditor for Athanor
 .DESCRIPTION
-  Scans the Rubedo codebase for common security vulnerabilities and code quality invariants:
+  Scans the Athanor codebase for common security vulnerabilities and code quality invariants:
   - Hardcoded secrets & credentials
   - Forbidden panic vectors (unwrap/expect) in non-test crate sources
   - Unaudited unsafe blocks
@@ -28,7 +28,7 @@ if (-not $RepoRoot) {
 }
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "RUBEDO AUTOMATED SECURITY & INVARIANT AUDITOR" -ForegroundColor Cyan
+Write-Host "ATHANOR AUTOMATED SECURITY & INVARIANT AUDITOR" -ForegroundColor Cyan
 Write-Host "Repo Root: $RepoRoot" -ForegroundColor Gray
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""

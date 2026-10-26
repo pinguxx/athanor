@@ -1,13 +1,13 @@
-<#
+﻿<#
 .SYNOPSIS
-  Profiles the Working Set (RSS) of a Rubedo process against the 40MB limit
+  Profiles the Working Set (RSS) of a Athanor process against the 40MB limit
 #>
 param(
-    [string]$ProcessName = "rubedo"
+    [string]$ProcessName = "athanor"
 )
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "RUBEDO MEMORY PROFILE (SLA: < 40 MB RSS)" -ForegroundColor Cyan
+Write-Host "ATHANOR MEMORY PROFILE (SLA: < 40 MB RSS)" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 $proc = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue

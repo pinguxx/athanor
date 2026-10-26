@@ -1,11 +1,11 @@
 //! # Example: Sandboxed Alembic WASM Execution & Fuel Metering
 //!
 //! Demonstrates running untrusted model-generated tools inside an isolated WebAssembly
-//! sandbox using [`rubedo_alembic::AlembicSandbox`].
+//! sandbox using [`athanor_alembic::AlembicSandbox`].
 //!
 //! Illustrates:
 //! 1. In-process WASM sandbox instantiation with zero host filesystem/network capabilities.
-//! 2. Bidirectional JSON exchange over guest linear memory via [`rubedo_alembic::WasmReagent`].
+//! 2. Bidirectional JSON exchange over guest linear memory via [`athanor_alembic::WasmReagent`].
 //! 3. Deterministic fuel metering halting an infinite loop in $<15$ milliseconds without
 //!    crashing the host application process.
 
@@ -13,11 +13,11 @@ use std::error::Error;
 use std::sync::Arc;
 use std::time::Instant;
 
-use rubedo_alembic::config::AlembicConfig;
-use rubedo_alembic::error::AlembicError;
-use rubedo_alembic::reagent::WasmReagent;
-use rubedo_alembic::sandbox::AlembicSandbox;
-use rubedo_core::reagent::Reagent;
+use athanor_alembic::config::AlembicConfig;
+use athanor_alembic::error::AlembicError;
+use athanor_alembic::reagent::WasmReagent;
+use athanor_alembic::sandbox::AlembicSandbox;
+use athanor_core::reagent::Reagent;
 use serde_json::json;
 
 /// A WebAssembly guest module that acts as an echo/transmutation calculator over linear memory.
@@ -48,7 +48,7 @@ const INFINITE_LOOP_WAT: &str = r#"
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     println!("============================================================");
-    println!(" ⚗ RUBEDO: Sandboxed Alembic WASM & Fuel Limits Example");
+    println!(" ⚗ ATHANOR: Sandboxed Alembic WASM & Fuel Limits Example");
     println!("============================================================\n");
 
     // 1. Initialize Alembic sandbox with memory and fuel limits
@@ -102,7 +102,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     match result {
         Err(AlembicError::FuelExhausted) => {
             println!("   [CONTAINED] Infinite loop trapped by Alembic fuel watchdog!");
-            println!("   Abort Latency: {} ms (SLA is < 15 ms)", elapsed.as_millis());
+            println!(
+                "   Abort Latency: {} ms (SLA is < 15 ms)",
+                elapsed.as_millis()
+            );
             println!("   Host Process Status: Completely unaffected and running healthy.\n");
 
             if elapsed.as_millis() >= 15 {

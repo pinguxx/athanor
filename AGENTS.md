@@ -1,4 +1,4 @@
-# Rubedo Workspace Rules & Mandatory Quality Gates
+﻿# Athanor Workspace Rules & Mandatory Quality Gates
 
 ## 1. Mandatory Post-Code Task Audit Protocol
 Whenever you finish implementing a code task, feature, crate, or phase deliverable:

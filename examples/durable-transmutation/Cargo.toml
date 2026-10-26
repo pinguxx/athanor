@@ -9,9 +9,9 @@ authors.workspace = true
 publish = false
 
 [dependencies]
-rubedo-core = { workspace = true }
-rubedo-crucible = { workspace = true }
-rubedo-opus = { workspace = true }
+athanor-core = { workspace = true }
+athanor-crucible = { workspace = true }
+athanor-opus = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

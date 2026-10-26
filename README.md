@@ -1,4 +1,4 @@
-# RUBEDO: Ironclad Agentic Framework for Rust
+# ATHANOR: Ironclad Agentic Framework for Rust
 
 [![Rust](https://img.shields.io/badge/rust-1.80%2B-orange.svg?style=flat-square)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg?style=flat-square)](LICENSE-MIT)
@@ -6,16 +6,16 @@
 [![Tests](https://img.shields.io/badge/tests-100%25%20passing-brightgreen.svg?style=flat-square)](#-testing--quality-assurance)
 [![Architecture](https://img.shields.io/badge/architecture-zero--lifetime-purple.svg?style=flat-square)](docs/ARCHITECTURE.md)
 
-> **Rubedo (*Redness*)**: The fourth and final stage of the alchemical *Magnum Opus*, transmuting raw base matter into gold. In this framework, chaotic, non-deterministic agent inputs and LLM streams are distilled into deterministic, verified, and durable state transitions using Rust’s compile-time safety and async runtime.
+> **Athanor**: The cosmic, self-feeding furnace of the alchemists, engineered to maintain an undying, constant heat across perpetual cycles of distillation. In this framework, chaotic, non-deterministic agent inputs and LLM streams are distilled into deterministic, verified, and durable state transitions using Rust’s compile-time safety and async runtime.
 
 ---
 
 ## 🏛 Core Philosophy & Architectural Tenets
 
-Rubedo is engineered from the ground up to solve the fundamental unreliability of autonomous LLM workflows. By combining compile-time safety, transactional persistence, process isolation, and open protocols, Rubedo turns non-deterministic reasoning into mission-critical software systems.
+Athanor is engineered from the ground up to solve the fundamental unreliability of autonomous LLM workflows. By combining compile-time safety, transactional persistence, process isolation, and open protocols, Athanor turns non-deterministic reasoning into mission-critical software systems.
 
 1. **Zero Lifetime Annotations**: Public macros (`#[reagent]`, `#[artificer_test]`) mandate `'static + Send + Sync` via value semantics and owned/`Arc` envelopes. Autonomous code synthesizers and human engineers can compose tools and agents without fighting lifetime borrow checker errors.
-2. **Durable Event-Sourced Execution**: Multi-step workflows (`Opus`) commit state before and after each step (`Vessel`) into an embedded SQLite engine (`Crucible`). Any node can suspend execution (e.g. human-in-the-loop approvals, webhooks) and resume seamlessly from an unforgeable cryptographic token.
+2. **Durable Event-Sourced Execution**: Multi-step workflows (`Opus`) commit state before and after each step (`Vessel`) into an embedded SQLite engine (`Crucible`). Any node can suspend execution (e.g. human-in-the-loop approvals, external webhooks) and resume seamlessly from an unforgeable cryptographic token.
 3. **In-Process Sandboxed Isolation**: Untrusted or model-generated tools execute inside WebAssembly (`wasmtime` 25.0) containers with zero host filesystem/network capabilities and strict fuel metering that terminates infinite loops in $<15\text{ ms}$.
 4. **Bidirectional Model Context Protocol (MCP)**: Native tools and agents automatically expose an MCP server interface (JSON-RPC 2.0 over stdio or duplex channels), while simultaneously discovering and consuming remote MCP endpoints as first-class tools.
 5. **Zero External Infrastructure**: Embedded SQLite with WAL mode (`sqlx`), local vector embeddings (`FastEmbed`), and embedded vector storage (`LanceDB`) run entirely in-process within a sub-40MB memory footprint.
@@ -25,11 +25,11 @@ Rubedo is engineered from the ground up to solve the fundamental unreliability o
 
 ## ⚗ Alchemical Lexicon
 
-Rubedo draws upon classical alchemical nomenclature to delineate system roles and operational boundaries:
+Athanor draws upon classical alchemical nomenclature to delineate system roles and operational boundaries:
 
 | Alchemical Term | Framework Concept | Role & Responsibility |
 |:---|:---|:---|
-| **Rubedo** | Root Framework | Top-level runtime, builder, and orchestrator coordinating subsystems. |
+| **Athanor** | Root Framework | Top-level runtime, builder, and orchestrator coordinating subsystems. |
 | **Artificer** | Autonomous Agent | Multi-step reasoning loop (ReAct) executing over history, context, and capabilities. |
 | **Reagent** | Tool / Capability | Executable capability with compile-time generated JSON Schema and typed validation. |
 | **Opus** | Durable Workflow | Directed acyclic graph (DAG) of steps with event-sourced checkpoints and rollbacks. |
@@ -43,21 +43,21 @@ Rubedo draws upon classical alchemical nomenclature to delineate system roles an
 
 ## 📦 Crate Ecosystem
 
-Rubedo is organized as a modular Cargo workspace composed of nine dedicated crates:
+Athanor is organized as a modular Cargo workspace composed of nine dedicated crates:
 
 ```text
-rubedo/
+athanor/
 ├── Cargo.toml                       # Workspace manifest & pinned dependencies
 ├── crates/
-│   ├── rubedo-core/                 # Core traits: Reagent, Artificer, Envelope, AthanorContext
-│   ├── rubedo-macros/               # Proc-macros: #[reagent], #[artificer_test]
-│   ├── rubedo-opus/                 # Durable DAG workflow engine & state machine
-│   ├── rubedo-crucible/             # SQLite event sourcing, checkpoints & token storage
-│   ├── rubedo-alembic/              # In-process WebAssembly sandbox with fuel limits
-│   ├── rubedo-mcp/                  # Bidirectional Model Context Protocol (MCP 2024-11-05+)
-│   ├── rubedo-rag/                  # Spagyric embedded RAG (FastEmbed + LanceDB)
-│   ├── rubedo-atelier/              # Embedded Axum server, SSE telemetry & Dev Studio UI
-│   └── rubedo-evals/                # Benchmark suites, token guardrails & LLM judges
+│   ├── athanor-core/                # Core traits: Reagent, Artificer, Envelope, AthanorContext
+│   ├── athanor-macros/              # Proc-macros: #[reagent], #[artificer_test]
+│   ├── athanor-opus/                # Durable DAG workflow engine & state machine
+│   ├── athanor-crucible/            # SQLite event sourcing, checkpoints & token storage
+│   ├── athanor-alembic/             # In-process WebAssembly sandbox with fuel limits
+│   ├── athanor-mcp/                 # Bidirectional Model Context Protocol (MCP 2024-11-05+)
+│   ├── athanor-rag/                 # Spagyric embedded RAG (FastEmbed + LanceDB)
+│   ├── athanor-atelier/             # Embedded Axum server, SSE telemetry & Dev Studio UI
+│   └── athanor-evals/               # Benchmark suites, token guardrails & LLM judges
 └── examples/
     ├── basic-artificer/             # Autonomous ReAct agent with custom reagents
     ├── durable-transmutation/       # Event-sourced workflow with tokenized pause/resume
@@ -68,15 +68,15 @@ rubedo/
 
 | Crate | Primary Focus | Key Types & Macros |
 |:---|:---|:---|
-| [`rubedo-core`](file:///c:/dev/Rubedo/crates/rubedo-core) | Foundational primitives & value semantics | `Reagent`, `Artificer`, `AthanorContext`, `Envelope`, `ReagentError` |
-| [`rubedo-macros`](file:///c:/dev/Rubedo/crates/rubedo-macros) | Procedural code & schema synthesizers | `#[reagent]`, `#[artificer_test]` |
-| [`rubedo-opus`](file:///c:/dev/Rubedo/crates/rubedo-opus) | Resilient DAG workflow orchestration | `Opus`, `OpusBuilder`, `OpusEngine`, `Vessel`, `OpusContext` |
-| [`rubedo-crucible`](file:///c:/dev/Rubedo/crates/rubedo-crucible) | SQLite WAL persistence & event sourcing | `CrucibleEngine`, `OpusRunRecord`, `SuspendedTokenRecord` |
-| [`rubedo-alembic`](file:///c:/dev/Rubedo/crates/rubedo-alembic) | Sandboxed WASM containment & fuel metering | `AlembicSandbox`, `AlembicConfig`, `WasmReagent` |
-| [`rubedo-mcp`](file:///c:/dev/Rubedo/crates/rubedo-mcp) | Bidirectional MCP gateway (JSON-RPC 2.0) | `McpServer`, `McpClient`, `StdioTransport`, `ChannelTransport` |
-| [`rubedo-rag`](file:///c:/dev/Rubedo/crates/rubedo-rag) | In-process vector indexing & semantic search | `SpagyricIndex`, `Document`, `RagSearchReagent`, `RecursiveCharacterSplitter` |
-| [`rubedo-atelier`](file:///c:/dev/Rubedo/crates/rubedo-atelier) | Embedded dev studio & live observability | `AtelierServer`, `AtelierRegistry`, `TelemetryBroadcaster`, `AtelierTracingLayer` |
-| [`rubedo-evals`](file:///c:/dev/Rubedo/crates/rubedo-evals) | Evaluation harness & behavioral guardrails | `BenchmarkSuite`, `TokenBudgetGuard`, `ExactMatch`, `LevenshteinDistance`, `LlmJudge` |
+| [`athanor-core`](crates/athanor-core) | Foundational primitives & value semantics | `Reagent`, `Artificer`, `AthanorContext`, `Envelope`, `ReagentError` |
+| [`athanor-macros`](crates/athanor-macros) | Procedural code & schema synthesizers | `#[reagent]`, `#[artificer_test]` |
+| [`athanor-opus`](crates/athanor-opus) | Resilient DAG workflow orchestration | `Opus`, `OpusBuilder`, `OpusEngine`, `Vessel`, `OpusContext` |
+| [`athanor-crucible`](crates/athanor-crucible) | SQLite WAL persistence & event sourcing | `CrucibleEngine`, `OpusRunRecord`, `SuspendedTokenRecord` |
+| [`athanor-alembic`](crates/athanor-alembic) | Sandboxed WASM containment & fuel metering | `AlembicSandbox`, `AlembicConfig`, `WasmReagent` |
+| [`athanor-mcp`](crates/athanor-mcp) | Bidirectional MCP gateway (JSON-RPC 2.0) | `McpServer`, `McpClient`, `StdioTransport`, `ChannelTransport` |
+| [`athanor-rag`](crates/athanor-rag) | In-process vector indexing & semantic search | `SpagyricIndex`, `Document`, `RagSearchReagent`, `RecursiveCharacterSplitter` |
+| [`athanor-atelier`](crates/athanor-atelier) | Embedded dev studio & live observability | `AtelierServer`, `AtelierRegistry`, `TelemetryBroadcaster`, `AtelierTracingLayer` |
+| [`athanor-evals`](crates/athanor-evals) | Evaluation harness & behavioral guardrails | `BenchmarkSuite`, `TokenBudgetGuard`, `ExactMatch`, `LevenshteinDistance`, `LlmJudge` |
 
 ---
 
@@ -87,8 +87,8 @@ rubedo/
 The `#[reagent]` procedural macro converts any standard asynchronous Rust function into an executable capability. It extracts docstrings to synthesize JSON Schemas at compile time, parses and validates inputs against the schema, and enforces typed error recovery.
 
 ```rust
-use rubedo_macros::reagent;
-use rubedo_core::reagent::ReagentError;
+use athanor_macros::reagent;
+use athanor_core::reagent::ReagentError;
 use serde_json::json;
 
 /// Mathematical calculator performing arithmetic operations.
@@ -136,8 +136,8 @@ An `Artificer` represents an autonomous agent persona equipped with reagents, co
 
 ```rust
 use std::sync::Arc;
-use rubedo_core::artificer::Artificer;
-use rubedo_core::reagent::Reagent;
+use athanor_core::artificer::Artificer;
+use athanor_core::reagent::Reagent;
 use serde_json::json;
 
 #[tokio::main]
@@ -176,17 +176,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 3. Durable Workflows with `Opus` & `Crucible`
 
-In mission-critical agent workflows, network failures, rate limits, and human approval steps must not drop state. `rubedo-opus` paired with `rubedo-crucible` persists state transitions into SQLite after every step.
+In mission-critical agent workflows, network failures, rate limits, and human approval steps must not drop state. `athanor-opus` paired with `athanor-crucible` persists state transitions into SQLite after every step.
 
 ```rust
 use std::sync::Arc;
 use async_trait::async_trait;
 use serde_json::json;
-use rubedo_crucible::CrucibleEngine;
-use rubedo_opus::context::OpusContext;
-use rubedo_opus::engine::{OpusEngine, OpusRunResult};
-use rubedo_opus::vessel::{Vessel, VesselError, VesselStatus};
-use rubedo_opus::workflow::Opus;
+use athanor_crucible::CrucibleEngine;
+use athanor_opus::context::OpusContext;
+use athanor_opus::engine::{OpusEngine, OpusRunResult};
+use athanor_opus::vessel::{Vessel, VesselError, VesselStatus};
+use athanor_opus::workflow::Opus;
 
 // Define a workflow step that requires human verification
 struct StepHumanApproval;
@@ -219,7 +219,7 @@ impl Vessel for StepHumanApproval {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 1. Initialize embedded SQLite storage engine
-    let crucible = CrucibleEngine::in_memory().await?;
+    let crucible = CrucibleEngine::connect_in_memory().await?;
     let engine = OpusEngine::new(crucible);
 
     // 2. Build the workflow DAG
@@ -255,14 +255,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 4. In-Process Sandboxed Execution with `Alembic` (WASM)
 
-When agents execute untrusted user code or dynamically synthesized functions, `rubedo-alembic` confines execution to WebAssembly running within `wasmtime` with zero access to host resources.
+When agents execute untrusted user code or dynamically synthesized functions, `athanor-alembic` confines execution to WebAssembly running within `wasmtime` with zero access to host resources.
 
 ```rust
 use std::sync::Arc;
-use rubedo_alembic::config::AlembicConfig;
-use rubedo_alembic::reagent::WasmReagent;
-use rubedo_alembic::sandbox::AlembicSandbox;
-use rubedo_core::reagent::Reagent;
+use athanor_alembic::config::AlembicConfig;
+use athanor_alembic::reagent::WasmReagent;
+use athanor_alembic::sandbox::AlembicSandbox;
+use athanor_core::reagent::Reagent;
 use serde_json::json;
 
 #[tokio::main]
@@ -308,18 +308,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 5. Bidirectional Model Context Protocol (MCP)
 
-`rubedo-mcp` implements the standard [Model Context Protocol (MCP 2024-11-05+)](https://spec.modelcontextprotocol.io/) specification over JSON-RPC 2.0.
+`athanor-mcp` implements the standard [Model Context Protocol (MCP 2024-11-05+)](https://spec.modelcontextprotocol.io/) specification over JSON-RPC 2.0.
 
 #### Exposing Reagents as an MCP Server
 ```rust
 use std::sync::Arc;
-use rubedo_mcp::server::McpServer;
-use rubedo_mcp::transport::StdioTransport;
+use athanor_mcp::server::McpServer;
+use athanor_mcp::transport::StdioTransport;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Expose native Reagents to Claude Desktop, Cursor, or external IDEs
-    let server = Arc::new(McpServer::new("alchemical-server", "1.0.0"));
+    let server = Arc::new(McpServer::new("athanor-mcp-server", "1.0.0"));
     server.register_reagent(Arc::new(CalculateReagent)).await;
 
     // Listen on standard I/O
@@ -333,9 +333,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 #### Consuming Remote MCP Servers as Dynamic Tools
 ```rust
 use std::sync::Arc;
-use rubedo_core::artificer::Artificer;
-use rubedo_mcp::client::McpClient;
-use rubedo_mcp::transport::ChannelTransport;
+use athanor_core::artificer::Artificer;
+use athanor_mcp::client::McpClient;
+use athanor_mcp::transport::ChannelTransport;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -364,12 +364,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 6. Spagyric Embedded RAG & Vector Store
 
-Perform vector search without deploying Chroma, Pinecone, or PostgreSQL. `rubedo-rag` bundles ONNX runtime embeddings (`FastEmbed` `BGESmallENV15`) and embedded columnar storage (`LanceDB`) in-process.
+Perform vector search without deploying Chroma, Pinecone, or PostgreSQL. `athanor-rag` bundles ONNX runtime embeddings (`FastEmbed` `BGESmallENV15`) and embedded columnar storage (`LanceDB`) in-process.
 
 ```rust
 use std::sync::Arc;
-use rubedo_core::artificer::Artificer;
-use rubedo_rag::prelude::*;
+use athanor_core::artificer::Artificer;
+use athanor_rag::prelude::*;
 use serde_json::json;
 
 #[tokio::main]
@@ -415,15 +415,15 @@ Embed live telemetry and a web visualizer directly into your binary with zero ex
 
 ```rust
 use std::sync::Arc;
-use rubedo_atelier::prelude::*;
-use rubedo_crucible::CrucibleEngine;
+use athanor_atelier::prelude::*;
+use athanor_crucible::CrucibleEngine;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 1. Setup registry and telemetry broadcaster
     let registry = AtelierRegistry::new();
     let broadcaster = TelemetryBroadcaster::new(1024);
-    let crucible = CrucibleEngine::in_memory().await?;
+    let crucible = CrucibleEngine::connect_in_memory().await?;
 
     // 2. Bind embedded HTTP/SSE dev studio server
     let server = AtelierServer::new(registry, broadcaster)
@@ -449,7 +449,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 Enforce strict regression prevention, token budgets, and LLM semantic grading:
 
 ```rust
-use rubedo_evals::prelude::*;
+use athanor_evals::prelude::*;
 
 // 1. Token consumption guardrail prevents runaway billing
 #[test]
@@ -506,7 +506,7 @@ cargo run -p sandboxed-alembic
 
 ## 🧪 Testing & Quality Assurance
 
-Rubedo maintains an uncompromising standard for code quality, safety, and correctness:
+Athanor maintains an uncompromising standard for code quality, safety, and correctness:
 - **Zero compiler warnings** (`cargo clippy --workspace --all-targets -- -D warnings`).
 - **Forbidden `.unwrap()` and `.expect()`** in non-test crate sources.
 - **100% safe Rust code** (or audited `// SAFETY` annotations).
@@ -530,11 +530,11 @@ powershell -ExecutionPolicy Bypass -File .agents/scripts/run_post_task_audits.ps
 
 Explore deep architectural blueprints and technical specifications:
 
-- **[Product Plan & Strategic Roadmap](file:///c:/dev/Rubedo/PRODUCT_PLAN.md)**: Market opportunity, target personas, non-functional performance budgets, and architecture milestones.
-- **[Technical Specification](file:///c:/dev/Rubedo/RUBEDO_SPEC.md)**: Exhaustive contracts for all traits, structs, error types, SQLite schemas, WASM isolation, MCP protocols, and REST/SSE endpoints.
-- **[Subsystem Architecture](file:///c:/dev/Rubedo/docs/ARCHITECTURE.md)**: Deep dive into the "Zero Lifetime Annotations" pattern, event-sourced state machines, WASM fuel limits, and in-process RAG.
-- **[Master Implementation Plan](file:///c:/dev/Rubedo/IMPLEMENTATION_PLAN.md)**: Detailed subsystem task breakdown with verifiable milestones and exit criteria.
-- **[Agent Execution Guide](file:///c:/dev/Rubedo/docs/AGENT_GUIDE.md)**: Guidelines and operational procedures for Antigravity and AI coding assistants.
+- **[Product Plan & Strategic Roadmap](PRODUCT_PLAN.md)**: Market opportunity, target personas, non-functional performance budgets, and architecture milestones.
+- **[Technical Specification](ATHANOR_SPEC.md)**: Exhaustive contracts for all traits, structs, error types, SQLite schemas, WASM isolation, MCP protocols, and REST/SSE endpoints.
+- **[Subsystem Architecture](docs/ARCHITECTURE.md)**: Deep dive into the "Zero Lifetime Annotations" pattern, event-sourced state machines, WASM fuel limits, and in-process RAG.
+- **[Master Implementation Plan](IMPLEMENTATION_PLAN.md)**: Detailed subsystem task breakdown with verifiable milestones and exit criteria.
+- **[Agent Execution Guide](docs/AGENT_GUIDE.md)**: Guidelines and operational procedures for Antigravity and AI coding assistants.
 
 ---
 

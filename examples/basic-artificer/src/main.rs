@@ -1,7 +1,7 @@
 //! # Example: Basic Artificer
 //!
 //! Demonstrates constructing an autonomous [`Artificer`] equipped with executable
-//! capabilities declared via the [`#[reagent]`](rubedo_macros::reagent) procedural macro.
+//! capabilities declared via the [`#[reagent]`](athanor_macros::reagent) procedural macro.
 //!
 //! Simulates a multi-step ReAct (Reasoning + Acting) loop where the agent inspects
 //! tool schemas, invokes capabilities with validated JSON arguments, and synthesizes
@@ -10,9 +10,9 @@
 use std::error::Error;
 use std::sync::Arc;
 
-use rubedo_core::artificer::Artificer;
-use rubedo_core::reagent::ReagentError;
-use rubedo_macros::reagent;
+use athanor_core::artificer::Artificer;
+use athanor_core::reagent::ReagentError;
+use athanor_macros::reagent;
 use serde_json::json;
 
 // ---------------------------------------------------------------------------
@@ -88,7 +88,7 @@ async fn fetch_weather(
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     println!("============================================================");
-    println!(" ⚗ RUBEDO: Basic Artificer Reasoning Loop Example");
+    println!(" ⚗ ATHANOR: Basic Artificer Reasoning Loop Example");
     println!("============================================================\n");
 
     // 1. Initialize Artificer with persona instructions and reagents
@@ -135,9 +135,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .ok_or("Reagent 'fetch_weather' missing")?;
 
     println!("   [Step 1] Reasoning: Need temperature data for Athens.");
-    let athens_data = weather_tool
-        .transmute(json!({ "city": "Athens" }))
-        .await?;
+    let athens_data = weather_tool.transmute(json!({ "city": "Athens" })).await?;
     let temp_athens = athens_data
         .get("temperature_celsius")
         .and_then(|v| v.as_f64())
@@ -146,9 +144,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Step 2: Fetch Cairo weather
     println!("   [Step 2] Reasoning: Need temperature data for Cairo.");
-    let cairo_data = weather_tool
-        .transmute(json!({ "city": "Cairo" }))
-        .await?;
+    let cairo_data = weather_tool.transmute(json!({ "city": "Cairo" })).await?;
     let temp_cairo = cairo_data
         .get("temperature_celsius")
         .and_then(|v| v.as_f64())
