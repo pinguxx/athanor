@@ -21,8 +21,8 @@ edition = "2021"
 rust-version = "1.80"
 license = "MIT OR Apache-2.0"
 authors = ["Athanor Contributors"]
-repository = "https://github.com/athanor-rs/athanor"
-homepage = "https://github.com/athanor-rs/athanor"
+repository = "https://github.com/pinguxx/athanor"
+homepage = "https://github.com/pinguxx/athanor"
 readme = "README.md"
 
 [workspace.dependencies]
