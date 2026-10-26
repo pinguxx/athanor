@@ -7,6 +7,7 @@ members = [
     "crates/rubedo-alembic",
     "crates/rubedo-mcp",
     "crates/rubedo-rag",
+    "crates/rubedo-atelier",
 ]
 resolver = "2"
 
@@ -33,6 +34,7 @@ sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "json", 
 wasmtime = "25.0"
 wasmtime-wasi = "25.0"
 axum = "0.7"
+tower-http = { version = "0.6", features = ["cors", "trace"] }
 rust-embed = "8.5"
 syn = { version = "2.0", features = ["full", "extra-traits"] }
 quote = "1.0"
@@ -50,4 +52,6 @@ rubedo-opus = { path = "crates/rubedo-opus", version = "0.1.0" }
 rubedo-alembic = { path = "crates/rubedo-alembic", version = "0.1.0" }
 rubedo-mcp = { path = "crates/rubedo-mcp", version = "0.1.0" }
 rubedo-rag = { path = "crates/rubedo-rag", version = "0.1.0" }
+rubedo-atelier = { path = "crates/rubedo-atelier", version = "0.1.0" }
+
 

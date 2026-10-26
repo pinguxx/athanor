@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rubedo Atelier Dev Studio</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card-bg: #1f2833;
+      --accent: #66fcf1;
+      --accent-dim: #45a29e;
+      --text: #c5c6c7;
+      --text-bright: #ffffff;
+      --border: #2e3842;
+    }
+    body {
+      margin: 0;
+      padding: 2rem;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    h1 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      background: var(--accent-dim);
+      color: var(--bg);
+      font-weight: bold;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .card h3 {
+      color: var(--text-bright);
+      margin-top: 0;
+    }
+    pre {
+      background: #141920;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <h1>⚗️ Rubedo Atelier Dev Studio</h1>
+  <span class="badge">LIVE OBSERVABILITY</span>
+  <div class="grid">
+    <div class="card">
+      <h3>Active Agents & Opuses</h3>
+      <div id="registry-content">Loading registry...</div>
+    </div>
+    <div class="card">
+      <h3>Real-Time Event Stream (SSE)</h3>
+      <div id="events-log">Awaiting events from /api/events...</div>
+    </div>
+  </div>
+  <script>
+    fetch('/api/registry')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('registry-content').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+      })
+      .catch(err => {
+        document.getElementById('registry-content').innerText = 'Failed to load registry: ' + err;
+      });
+
+    const evtSource = new EventSource('/api/events');
+    evtSource.onmessage = (e) => {
+      const log = document.getElementById('events-log');
+      log.innerHTML += '<div>' + e.data + '</div>';
+    };
+  </script>
+</body>
+</html>

@@ -154,7 +154,7 @@ flowchart TD
   cargo test -p rubedo-rag
   ```
 
-### Phase 6: Atelier Dev Studio & Observability Server
+### Phase 6: Atelier Dev Studio & Observability Server `[COMPLETED]`
 - **Primary Target Crates**: `crates/rubedo-atelier`
 - **Specification**: [Detailed Phase 6 Guide](file:///c:/dev/Rubedo/docs/phases/phase-06-atelier-studio.md)
 - **Exit Criteria**: Embedded Axum server starts, serves static frontend assets via `rust-embed`, streams live SSE telemetry, and exposes checkpoint replay API.
