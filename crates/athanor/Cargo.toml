@@ -1,0 +1,42 @@
+[package]
+name = "athanor"
+description = "Ironclad, enterprise-grade agentic framework in Rust with durable workflows, WASM sandboxing, in-process RAG, and bidirectional MCP"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["agent", "llm", "ai", "athanor", "async"]
+categories = ["asynchronous", "development-tools"]
+
+[dependencies]
+athanor-core = { workspace = true }
+athanor-macros = { workspace = true, optional = true }
+athanor-crucible = { workspace = true, optional = true }
+athanor-opus = { workspace = true, optional = true }
+athanor-alembic = { workspace = true, optional = true }
+athanor-mcp = { workspace = true, optional = true }
+athanor-rag = { workspace = true, optional = true }
+athanor-atelier = { workspace = true, optional = true }
+athanor-evals = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+schemars = { workspace = true }
+
+[features]
+default = ["macros"]
+macros = ["dep:athanor-macros"]
+crucible = ["dep:athanor-crucible"]
+opus = ["dep:athanor-opus", "crucible"]
+alembic = ["dep:athanor-alembic"]
+mcp = ["dep:athanor-mcp"]
+rag = ["dep:athanor-rag"]
+atelier = ["dep:athanor-atelier", "opus", "crucible"]
+evals = ["dep:athanor-evals", "macros"]
+full = ["macros", "crucible", "opus", "alembic", "mcp", "rag", "atelier", "evals"]

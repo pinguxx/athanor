@@ -43,12 +43,13 @@ Athanor draws upon classical alchemical nomenclature to delineate system roles a
 
 ## 📦 Crate Ecosystem
 
-Athanor is organized as a modular Cargo workspace composed of nine dedicated crates:
+Athanor is organized as a modular Cargo workspace composed of the root `athanor` umbrella crate and nine dedicated subsystem crates:
 
 ```text
 athanor/
 ├── Cargo.toml                       # Workspace manifest & pinned dependencies
 ├── crates/
+│   ├── athanor/                     # Top-level umbrella facade crate (feature-gated)
 │   ├── athanor-core/                # Core traits: Reagent, Artificer, Envelope, AthanorContext
 │   ├── athanor-macros/              # Proc-macros: #[reagent], #[artificer_test]
 │   ├── athanor-opus/                # Durable DAG workflow engine & state machine
@@ -68,6 +69,7 @@ athanor/
 
 | Crate | Primary Focus | Key Types & Macros |
 |:---|:---|:---|
+| [`athanor`](crates/athanor) | Top-level umbrella facade with modular feature flags | `athanor::prelude::*`, `features = ["full"]` |
 | [`athanor-core`](crates/athanor-core) | Foundational primitives & value semantics | `Reagent`, `Artificer`, `AthanorContext`, `Envelope`, `ReagentError` |
 | [`athanor-macros`](crates/athanor-macros) | Procedural code & schema synthesizers | `#[reagent]`, `#[artificer_test]` |
 | [`athanor-opus`](crates/athanor-opus) | Resilient DAG workflow orchestration | `Opus`, `OpusBuilder`, `OpusEngine`, `Vessel`, `OpusContext` |

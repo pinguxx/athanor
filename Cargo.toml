@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "crates/athanor",
     "crates/athanor-core",
     "crates/athanor-macros",
     "crates/athanor-crucible",
@@ -49,6 +50,7 @@ uuid = { version = "1.10", features = ["v4", "serde"] }
 futures = "0.3"
 
 # Internal workspace crates
+athanor = { path = "crates/athanor", version = "0.1.0" }
 athanor-core = { path = "crates/athanor-core", version = "0.1.0" }
 athanor-macros = { path = "crates/athanor-macros", version = "0.1.0" }
 athanor-crucible = { path = "crates/athanor-crucible", version = "0.1.0" }
