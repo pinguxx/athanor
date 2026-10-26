@@ -99,11 +99,11 @@ flowchart TD
   - [x] 7.5 Phase 7 Verification Test: simulated failure conditions return non-zero exit codes below threshold
   - [x] 7.6 Verify Phase 7: `cargo test -p rubedo-evals`
 
-- [ ] **Phase 8: Reference Examples & Showcase Applications**
-  - [ ] 8.1 Example 1: `basic-artificer` (ReAct agent reasoning with custom Reagents)
-  - [ ] 8.2 Example 2: `durable-transmutation` (Multi-step suspended workflow resumed via token)
-  - [ ] 8.3 Example 3: `sandboxed-alembic` (Executing untrusted WASM under fuel and memory limits)
-  - [ ] 8.4 Full workspace build and test run: `cargo test --all`
+- [x] **Phase 8: Reference Examples & Showcase Applications**
+  - [x] 8.1 Example 1: `basic-artificer` (ReAct agent reasoning with custom Reagents)
+  - [x] 8.2 Example 2: `durable-transmutation` (Multi-step suspended workflow resumed via token)
+  - [x] 8.3 Example 3: `sandboxed-alembic` (Executing untrusted WASM under fuel and memory limits)
+  - [x] 8.4 Full workspace build and test run: `cargo test --all`
 
 ---
 
@@ -172,7 +172,7 @@ flowchart TD
   cargo test -p rubedo-evals
   ```
 
-### Phase 8: Reference Examples & Workspace Release
+### Phase 8: Reference Examples & Workspace Release `[COMPLETED]`
 - **Primary Target**: `examples/*` and root workspace validation
 - **Specification**: [Detailed Phase 8 Guide](file:///c:/dev/Rubedo/docs/phases/phase-08-examples-and-release.md)
 - **Exit Criteria**: All three reference examples build and run without warnings; `cargo test --all` passes 100%.

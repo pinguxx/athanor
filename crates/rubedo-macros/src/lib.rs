@@ -208,7 +208,7 @@ pub fn reagent(attr: TokenStream, item: TokenStream) -> TokenStream {
     };
 
     let reagent_impl = quote! {
-        #[::async_trait::async_trait]
+        #[#core_path::async_trait]
         impl #core_path::reagent::Reagent for #reagent_struct_ident {
             fn name(&self) -> &'static str {
                 #tool_name

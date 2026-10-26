@@ -22,6 +22,7 @@ pub mod reagent;
 
 /// Prelude module for convenient imports of standard Rubedo core symbols.
 pub mod prelude {
+    pub use async_trait::async_trait;
     pub use crate::artificer::{Artificer, ArtificerBuilder};
     pub use crate::context::{
         AthanorContext, Message, MessageRole, TokenUsage, ToolExecutionRecord,
@@ -32,6 +33,7 @@ pub mod prelude {
 }
 
 pub use artificer::{Artificer, ArtificerBuilder};
+pub use async_trait::async_trait;
 pub use context::AthanorContext;
 pub use envelope::Envelope;
 pub use error::RubedoError;

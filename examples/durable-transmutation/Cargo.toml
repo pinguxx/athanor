@@ -1,0 +1,19 @@
+[package]
+name = "durable-transmutation"
+description = "Reference example demonstrating a durable multi-step workflow with human-in-the-loop suspension and tokenized resumption"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+rubedo-core = { workspace = true }
+rubedo-crucible = { workspace = true }
+rubedo-opus = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+async-trait = { workspace = true }
+uuid = { workspace = true }

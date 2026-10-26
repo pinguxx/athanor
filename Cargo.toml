@@ -9,6 +9,9 @@ members = [
     "crates/rubedo-rag",
     "crates/rubedo-atelier",
     "crates/rubedo-evals",
+    "examples/basic-artificer",
+    "examples/durable-transmutation",
+    "examples/sandboxed-alembic",
 ]
 resolver = "2"
 
