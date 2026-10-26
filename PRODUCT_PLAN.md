@@ -119,7 +119,7 @@ graph LR
 | **Phase 4** | `v0.2.0-beta` | Universal Interoperability | `rubedo-mcp` (Bidirectional JSON-RPC stdio/SSE) | Completed |
 | **Phase 5** | `v0.3.0-alpha` | Spagyric In-Process RAG | `rubedo-rag` (fastembed-rs, lancedb, splitters) | Completed |
 | **Phase 6** | `v0.3.0-beta` | Embedded Dev Studio | `rubedo-atelier` (Axum SSE server, rust-embed Svelte UI) | Completed |
-| **Phase 7** | `v0.4.0` | Verification & Guardrails | `rubedo-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) | Pending |
+| **Phase 7** | `v0.4.0` | Verification & Guardrails | `rubedo-evals` (deterministic metrics, LLM judge, `#[artificer_test]`) | Completed |
 | **Phase 8** | `v1.0.0` | Production Hardening | Examples, benchmarks, documentation, multi-platform release | Pending |
 
 ---

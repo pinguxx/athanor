@@ -269,6 +269,93 @@ pub fn reagent(attr: TokenStream, item: TokenStream) -> TokenStream {
     TokenStream::from(expanded)
 }
 
+#[derive(Default)]
+struct ArtificerTestArgs {
+    threshold: Option<f64>,
+    cases: Option<String>,
+    evals_crate: Option<Path>,
+}
+
+/// The `#[artificer_test]` attribute macro transforms an asynchronous benchmark evaluation
+/// into a `#[tokio::test]` that enforces required pass rate thresholds.
+///
+/// # Attributes
+///
+/// - `threshold = 0.85`: Minimum required pass rate in range `[0.0, 1.0]` (defaults to `1.0`).
+/// - `cases = "path/to/cases.json"`: Optional path to a JSON file containing benchmark test cases.
+/// - `crate = "..."`: Overrides the path to `rubedo_evals` (defaults to `::rubedo_evals`).
+#[proc_macro_attribute]
+pub fn artificer_test(attr: TokenStream, item: TokenStream) -> TokenStream {
+    let mut test_args = ArtificerTestArgs::default();
+
+    if !attr.is_empty() {
+        let attr_parser = parser(|meta| {
+            if meta.path.is_ident("threshold") {
+                if let Ok(lit) = meta.value()?.parse::<syn::LitFloat>() {
+                    if let Ok(v) = lit.base10_parse::<f64>() {
+                        test_args.threshold = Some(v);
+                        return Ok(());
+                    }
+                } else if let Ok(lit) = meta.value()?.parse::<syn::LitInt>() {
+                    if let Ok(v) = lit.base10_parse::<f64>() {
+                        test_args.threshold = Some(v);
+                        return Ok(());
+                    }
+                }
+                Err(meta.error("expected float or integer for threshold"))
+            } else if meta.path.is_ident("cases") {
+                let lit: LitStr = meta.value()?.parse()?;
+                test_args.cases = Some(lit.value());
+                Ok(())
+            } else if meta.path.is_ident("crate") {
+                let path: Path = meta.value()?.parse()?;
+                test_args.evals_crate = Some(path);
+                Ok(())
+            } else {
+                Err(meta.error("unrecognized attribute for artificer_test"))
+            }
+        });
+
+        parse_macro_input!(attr with attr_parser);
+    }
+
+    let input_fn = parse_macro_input!(item as ItemFn);
+    let fn_name = &input_fn.sig.ident;
+    let fn_vis = &input_fn.vis;
+    let fn_attrs = &input_fn.attrs;
+    let fn_output = &input_fn.sig.output;
+    let fn_block = &input_fn.block;
+
+    if input_fn.sig.asyncness.is_none() {
+        return syn::Error::new_spanned(
+            &input_fn.sig,
+            "#[artificer_test] functions must be declared as async fn",
+        )
+        .to_compile_error()
+        .into();
+    }
+
+    let threshold = test_args.threshold.unwrap_or(1.0);
+    let evals_path = test_args
+        .evals_crate
+        .unwrap_or_else(|| syn::parse_quote!(::rubedo_evals));
+
+    let expanded = quote! {
+        #(#fn_attrs)*
+        #[::tokio::test]
+        #fn_vis async fn #fn_name() {
+            async fn __inner_artificer_body() #fn_output {
+                #fn_block
+            }
+
+            let __report_result = __inner_artificer_body().await;
+            #evals_path::suite::ArtificerTestResult::verify_threshold(__report_result, #threshold);
+        }
+    };
+
+    TokenStream::from(expanded)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

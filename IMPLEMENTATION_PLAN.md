@@ -91,13 +91,13 @@ flowchart TD
   - [x] 6.6 Phase 6 Integration Test: Ephemeral server start & registry endpoint validation
   - [x] 6.7 Verify Phase 6: `cargo test -p rubedo-atelier`
 
-- [ ] **Phase 7: Verification Harness & Evaluation Guardrails**
-  - [ ] 7.1 `rubedo-evals` crate scaffolding
-  - [ ] 7.2 Deterministic scoring metrics: `ExactMatch`, `LevenshteinDistance`, `JsonGrammarValidator`
-  - [ ] 7.3 Model-graded scoring harness: `LlmJudge` (factual correctness, toxicity, tone)
-  - [ ] 7.4 `#[artificer_test]` procedural macro for benchmark runner
-  - [ ] 7.5 Phase 7 Verification Test: simulated failure conditions return non-zero exit codes below threshold
-  - [ ] 7.6 Verify Phase 7: `cargo test -p rubedo-evals`
+- [x] **Phase 7: Verification Harness & Evaluation Guardrails**
+  - [x] 7.1 `rubedo-evals` crate scaffolding
+  - [x] 7.2 Deterministic scoring metrics: `ExactMatch`, `LevenshteinDistance`, `JsonGrammarValidator`
+  - [x] 7.3 Model-graded scoring harness: `LlmJudge` (factual correctness, toxicity, tone)
+  - [x] 7.4 `#[artificer_test]` procedural macro for benchmark runner
+  - [x] 7.5 Phase 7 Verification Test: simulated failure conditions return non-zero exit codes below threshold
+  - [x] 7.6 Verify Phase 7: `cargo test -p rubedo-evals`
 
 - [ ] **Phase 8: Reference Examples & Showcase Applications**
   - [ ] 8.1 Example 1: `basic-artificer` (ReAct agent reasoning with custom Reagents)
@@ -163,7 +163,7 @@ flowchart TD
   cargo test -p rubedo-atelier
   ```
 
-### Phase 7: Verification Harness & Evaluation Guardrails
+### Phase 7: Verification Harness & Evaluation Guardrails `[COMPLETED]`
 - **Primary Target Crates**: `crates/rubedo-evals`
 - **Specification**: [Detailed Phase 7 Guide](file:///c:/dev/Rubedo/docs/phases/phase-07-evals-and-guardrails.md)
 - **Exit Criteria**: Automated benchmark evaluation suite detects regressions, scores semantic criteria, and enforces token budgets.

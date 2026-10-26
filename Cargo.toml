@@ -8,6 +8,7 @@ members = [
     "crates/rubedo-mcp",
     "crates/rubedo-rag",
     "crates/rubedo-atelier",
+    "crates/rubedo-evals",
 ]
 resolver = "2"
 
@@ -53,5 +54,6 @@ rubedo-alembic = { path = "crates/rubedo-alembic", version = "0.1.0" }
 rubedo-mcp = { path = "crates/rubedo-mcp", version = "0.1.0" }
 rubedo-rag = { path = "crates/rubedo-rag", version = "0.1.0" }
 rubedo-atelier = { path = "crates/rubedo-atelier", version = "0.1.0" }
+rubedo-evals = { path = "crates/rubedo-evals", version = "0.1.0" }
 
 
