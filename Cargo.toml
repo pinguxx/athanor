@@ -48,6 +48,7 @@ fastembed = "3.8"
 lancedb = "0.10"
 uuid = { version = "1.10", features = ["v4", "serde"] }
 futures = "0.3"
+chrono = "=0.4.38"
 
 # Internal workspace crates
 athanor = { path = "crates/athanor", version = "0.1.0" }

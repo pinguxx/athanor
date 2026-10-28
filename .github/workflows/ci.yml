@@ -32,13 +32,10 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
 
-      - name: Install Protoc (Ubuntu)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
-
-      - name: Install Protoc (macOS)
-        if: runner.os == 'macOS'
-        run: brew install protobuf
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Workspace
         run: cargo check --workspace --all-targets
@@ -58,7 +55,9 @@ jobs:
           components: clippy, rustfmt
 
       - name: Install Protoc
-        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2

@@ -25,6 +25,7 @@ fastembed = { version = "3.8", default-features = false, features = ["ort-load-d
 lancedb = { workspace = true }
 
 futures = { workspace = true }
+chrono = { workspace = true }
 arrow-array = "52.2"
 arrow-schema = "52.2"
 tempfile = "3.10"
