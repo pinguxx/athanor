@@ -10,6 +10,7 @@ env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
   HF_ENDPOINT: "https://huggingface.co"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   check-and-test:
@@ -22,7 +23,7 @@ jobs:
         rust: ["1.99.0"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust (${{ matrix.rust }})
         uses: dtolnay/rust-toolchain@stable
@@ -59,7 +60,7 @@ jobs:
     name: Clippy & Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
