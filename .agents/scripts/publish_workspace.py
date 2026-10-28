@@ -19,6 +19,9 @@ import subprocess
 import sys
 import time
 import os
+import re
+import email.utils
+import datetime
 
 PUBLISH_ORDER = [
     "athanor-core",
@@ -48,7 +51,7 @@ def check_auth():
     return has_token
 
 
-def publish_crate(crate_name: str, dry_run: bool = False, max_attempts: int = 5) -> bool:
+def publish_crate(crate_name: str, dry_run: bool = False, max_attempts: int = 10) -> bool:
     cmd = ["cargo", "publish", "-p", crate_name]
     if dry_run:
         cmd.append("--dry-run")
@@ -59,16 +62,43 @@ def publish_crate(crate_name: str, dry_run: bool = False, max_attempts: int = 5)
         print(f"Command: {' '.join(cmd)}")
         print(f"=======================================================")
 
-        res = subprocess.run(cmd)
-        if res.returncode == 0:
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        print(proc.stdout, end="")
+
+        if proc.returncode == 0:
+            print(f"[SUCCESS] {crate_name} published successfully!")
+            return True
+
+        if "already exists on crates.io" in proc.stdout:
+            print(f"[ALREADY PUBLISHED] {crate_name} is already live on crates.io. Proceeding.")
             return True
 
         if dry_run:
             return False
 
+        # Check for crates.io 429 Too Many Requests rate limit
+        if "429 Too Many Requests" in proc.stdout:
+            match = re.search(r"try again after (.*?) and see", proc.stdout)
+            if match:
+                date_str = match.group(1).strip()
+                try:
+                    target_time = email.utils.parsedate_to_datetime(date_str)
+                    now = datetime.datetime.now(datetime.timezone.utc)
+                    wait_secs = max(5, int((target_time - now).total_seconds()) + 10)
+                    print(f"\n[RATE-LIMIT] Crates.io new crate rate limit hit. Resets at {target_time} UTC.")
+                    print(f"Sleeping {wait_secs}s until rate limit window resets...")
+                    time.sleep(wait_secs)
+                    continue
+                except Exception as e:
+                    print(f"Could not parse rate limit date '{date_str}': {e}")
+
+            print("[RATE-LIMIT] 429 hit, sleeping default 300s...")
+            time.sleep(300)
+            continue
+
         if attempt < max_attempts:
             wait_time = 15 * attempt
-            print(f"[RETRY] Attempt {attempt} failed for {crate_name}. Waiting {wait_time}s for index propagation before retry...")
+            print(f"[RETRY] Attempt {attempt} failed for {crate_name}. Waiting {wait_time}s before retry...")
             time.sleep(wait_time)
 
     return False
