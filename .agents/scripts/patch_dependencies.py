@@ -2,7 +2,7 @@
 """
 Patch upstream dependencies that hit compiler recursion/depth limits or runtime bugs.
 - lance-0.17.0: Fixes layout computation query depth limit overflow in rustc.
-- hf-hub-0.3.2: Fixes RelativeUrlWithoutBase on HuggingFace 302/307 redirects.
+- hf-hub-0.3.2: Fixes RelativeUrlWithoutBase on HuggingFace 302/307 redirects in sync client.
 """
 
 import glob
@@ -48,17 +48,21 @@ def patch_hf_hub():
 
             modified = False
 
-            target_meta = """        let response = if is_redirection {
-            let loc = response.header(LOCATION).unwrap();
-            self.client
-                .get(loc)
+            # Hunk 1: Disable automatic redirect following on client so manual redirect logic handles it
+            target_builder = "let client = HeaderAgent::new(ureq::builder().build(), headers.clone());"
+            replacement_builder = "let client = HeaderAgent::new(ureq::builder().redirects(0).build(), headers.clone());"
+            if target_builder in content:
+                content = content.replace(target_builder, replacement_builder)
+                modified = True
+
+            # Hunk 2: Handle relative Location headers in metadata()
+            target_meta = """            self.client
+                .get(response.header(LOCATION).unwrap())
                 .set(RANGE, "bytes=0-0")
                 .call()
-                .map_err(Box::new)?
-        } else {"""
+                .map_err(Box::new)?"""
 
-            replacement_meta = """        let response = if is_redirection {
-            let loc = response.header(LOCATION).unwrap();
+            replacement_meta = """            let loc = response.header(LOCATION).unwrap();
             let loc_url = if loc.starts_with('/') {
                 format!("https://huggingface.co{loc}")
             } else if !loc.starts_with("http") {
@@ -70,18 +74,15 @@ def patch_hf_hub():
                 .get(&loc_url)
                 .set(RANGE, "bytes=0-0")
                 .call()
-                .map_err(Box::new)?
-        } else {"""
+                .map_err(Box::new)?"""
 
             if target_meta in content:
                 content = content.replace(target_meta, replacement_meta)
                 modified = True
 
-            target_down = """        let response = self.client.get(url).call().map_err(Box::new)?;
-
-        let mut reader = response.into_reader();"""
-
-            replacement_down = """        let mut curr_url = url.to_string();
+            # Hunk 3: Handle relative Location headers in download_tempfile()
+            target_down = "let response = self.client.get(url).call().map_err(Box::new)?;"
+            replacement_down = """let mut curr_url = url.to_string();
         let mut response = self.client.get(&curr_url).call().map_err(Box::new)?;
         while (300..400).contains(&response.status()) {
             if let Some(loc) = response.header(LOCATION) {
@@ -94,9 +95,7 @@ def patch_hf_hub():
             } else {
                 break;
             }
-        }
-
-        let mut reader = response.into_reader();"""
+        }"""
 
             if target_down in content:
                 content = content.replace(target_down, replacement_down)
@@ -107,7 +106,7 @@ def patch_hf_hub():
                     f.write(content)
                 print(f"[PATCH] Patched redirect handling in {path}")
             else:
-                print(f"[OK] {path} already patched or has redirect handling.")
+                print(f"[OK] {path} already patched with redirect handling.")
         except Exception as e:
             print(f"[ERROR] Failed to patch {path}: {e}", file=sys.stderr)
             return 1
