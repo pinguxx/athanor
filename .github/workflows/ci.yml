@@ -35,9 +35,9 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Install Protoc
-        uses: arduino/setup-protoc@v3
+        uses: taiki-e/install-action@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          tool: protoc
 
       - name: Patch Dependencies
         shell: bash
@@ -69,9 +69,9 @@ jobs:
           components: clippy, rustfmt
 
       - name: Install Protoc
-        uses: arduino/setup-protoc@v3
+        uses: taiki-e/install-action@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          tool: protoc
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
