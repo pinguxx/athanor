@@ -48,18 +48,30 @@ def check_auth():
     return has_token
 
 
-def publish_crate(crate_name: str, dry_run: bool = False) -> bool:
+def publish_crate(crate_name: str, dry_run: bool = False, max_attempts: int = 5) -> bool:
     cmd = ["cargo", "publish", "-p", crate_name]
     if dry_run:
         cmd.append("--dry-run")
 
-    print(f"\n=======================================================")
-    print(f"[{'DRY-RUN' if dry_run else 'PUBLISHING'}] {crate_name}")
-    print(f"Command: {' '.join(cmd)}")
-    print(f"=======================================================")
+    for attempt in range(1, max_attempts + 1):
+        print(f"\n=======================================================")
+        print(f"[{'DRY-RUN' if dry_run else 'PUBLISHING'}] {crate_name} (Attempt {attempt}/{max_attempts})")
+        print(f"Command: {' '.join(cmd)}")
+        print(f"=======================================================")
 
-    res = subprocess.run(cmd)
-    return res.returncode == 0
+        res = subprocess.run(cmd)
+        if res.returncode == 0:
+            return True
+
+        if dry_run:
+            return False
+
+        if attempt < max_attempts:
+            wait_time = 15 * attempt
+            print(f"[RETRY] Attempt {attempt} failed for {crate_name}. Waiting {wait_time}s for index propagation before retry...")
+            time.sleep(wait_time)
+
+    return False
 
 
 def main():
