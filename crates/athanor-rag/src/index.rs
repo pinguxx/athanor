@@ -21,7 +21,10 @@ const DEFAULT_TABLE_NAME: &str = "spagyric_documents";
 const EMBEDDING_DIMENSION: usize = 384;
 
 fn ensure_hf_endpoint() {
-    if std::env::var("HF_ENDPOINT").map(|v| v.is_empty()).unwrap_or(true) {
+    if std::env::var("HF_ENDPOINT")
+        .map(|v| v.is_empty())
+        .unwrap_or(true)
+    {
         std::env::set_var("HF_ENDPOINT", "https://huggingface.co");
     }
 }
