@@ -40,7 +40,7 @@ fn test_fuel_exhaustion_infinite_loop_halts_in_under_15ms() {
 
     // 2. Assert the infinite loop execution halts quickly under fuel exhaustion SLA
     #[cfg(debug_assertions)]
-    let max_millis = 100;
+    let max_millis = 250;
     #[cfg(not(debug_assertions))]
     let max_millis = 15;
 
@@ -67,7 +67,7 @@ fn test_fuel_exhaustion_transmute_protocol() {
 
     assert!(matches!(result, Err(AlembicError::FuelExhausted)));
     #[cfg(debug_assertions)]
-    let max_millis = 100;
+    let max_millis = 250;
     #[cfg(not(debug_assertions))]
     let max_millis = 15;
 

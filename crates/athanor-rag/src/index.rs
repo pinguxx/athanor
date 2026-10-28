@@ -20,12 +20,49 @@ use crate::error::RagError;
 const DEFAULT_TABLE_NAME: &str = "spagyric_documents";
 const EMBEDDING_DIMENSION: usize = 384;
 
+static MODEL_INIT_LOCK: Mutex<()> = Mutex::const_new(());
+
 fn ensure_hf_endpoint() {
     if std::env::var("HF_ENDPOINT")
         .map(|v| v.is_empty())
         .unwrap_or(true)
     {
         std::env::set_var("HF_ENDPOINT", "https://huggingface.co");
+    }
+}
+
+fn init_embedding_model() -> Result<TextEmbedding, RagError> {
+    ensure_hf_endpoint();
+    let mut attempts = 0;
+    loop {
+        attempts += 1;
+        let options = InitOptions {
+            model_name: EmbeddingModel::BGESmallENV15,
+            show_download_progress: false,
+            ..Default::default()
+        };
+        let res = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            TextEmbedding::try_new(options)
+        }));
+        match res {
+            Ok(Ok(model)) => return Ok(model),
+            Ok(Err(e)) => {
+                if attempts < 3 {
+                    std::thread::sleep(std::time::Duration::from_millis(500 * attempts));
+                    continue;
+                }
+                return Err(RagError::Embedding(e.to_string()));
+            }
+            Err(_panic) => {
+                if attempts < 3 {
+                    std::thread::sleep(std::time::Duration::from_millis(500 * attempts));
+                    continue;
+                }
+                return Err(RagError::Embedding(
+                    "Fastembed panicked during model retrieval".into(),
+                ));
+            }
+        }
     }
 }
 
@@ -54,15 +91,9 @@ impl SpagyricIndex {
             .await
             .map_err(|e| RagError::Database(e.to_string()))?;
 
-        ensure_hf_endpoint();
-        let options = InitOptions {
-            model_name: EmbeddingModel::BGESmallENV15,
-            show_download_progress: false,
-            ..Default::default()
-        };
-
-        let model =
-            TextEmbedding::try_new(options).map_err(|e| RagError::Embedding(e.to_string()))?;
+        let _guard = MODEL_INIT_LOCK.lock().await;
+        let model = init_embedding_model()?;
+        drop(_guard);
 
         Ok(Self {
             model: Arc::new(Mutex::new(model)),
@@ -84,15 +115,9 @@ impl SpagyricIndex {
             .await
             .map_err(|e| RagError::Database(e.to_string()))?;
 
-        ensure_hf_endpoint();
-        let options = InitOptions {
-            model_name: EmbeddingModel::BGESmallENV15,
-            show_download_progress: false,
-            ..Default::default()
-        };
-
-        let model =
-            TextEmbedding::try_new(options).map_err(|e| RagError::Embedding(e.to_string()))?;
+        let _guard = MODEL_INIT_LOCK.lock().await;
+        let model = init_embedding_model()?;
+        drop(_guard);
 
         Ok(Self {
             model: Arc::new(Mutex::new(model)),

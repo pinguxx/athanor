@@ -3,9 +3,13 @@ use athanor_core::reagent::Reagent;
 use athanor_rag::prelude::*;
 use serde_json::json;
 use std::sync::Arc;
+use tokio::sync::Mutex;
+
+static TEST_MUTEX: Mutex<()> = Mutex::const_new(());
 
 #[tokio::test]
 async fn test_semantic_search_cosine_similarity() {
+    let _lock = TEST_MUTEX.lock().await;
     // 1. Initialize in-process SpagyricIndex
     let index = SpagyricIndex::new_in_memory()
         .await
@@ -145,6 +149,7 @@ fn test_recursive_character_splitter() {
 
 #[tokio::test]
 async fn test_index_edge_cases() {
+    let _lock = TEST_MUTEX.lock().await;
     let index = SpagyricIndex::new_in_memory()
         .await
         .expect("Failed to initialize in-memory index");
@@ -245,6 +250,7 @@ fn test_error_conversions() {
 
 #[tokio::test]
 async fn test_rag_reagent_schemas_and_validation() {
+    let _lock = TEST_MUTEX.lock().await;
     let index = Arc::new(SpagyricIndex::new_in_memory().await.unwrap());
     let reagent = RagSearchReagent::with_details(
         Arc::clone(&index),
