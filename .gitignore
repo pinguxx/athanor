@@ -3,6 +3,7 @@
 *.pdb
 .agents/.logs/
 .fastembed_cache/
+.onnxruntime/
 docs/phases/
 docs/AGENT_GUIDE.md
 .cargo/config.toml

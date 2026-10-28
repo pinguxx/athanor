@@ -46,6 +46,11 @@ jobs:
       - name: Check Workspace
         run: cargo check --workspace --all-targets
 
+      - name: Setup ONNX Runtime
+        shell: bash
+        run: |
+          python3 .agents/scripts/setup_onnxruntime.py || python .agents/scripts/setup_onnxruntime.py
+
       - name: Run Test Suite
         run: cargo test --workspace
 
