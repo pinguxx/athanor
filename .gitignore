@@ -7,5 +7,7 @@
 docs/phases/
 docs/AGENT_GUIDE.md
 .cargo/config.toml
+__pycache__/
+*.pyc
 
 
