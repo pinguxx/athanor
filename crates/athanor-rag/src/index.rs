@@ -20,6 +20,12 @@ use crate::error::RagError;
 const DEFAULT_TABLE_NAME: &str = "spagyric_documents";
 const EMBEDDING_DIMENSION: usize = 384;
 
+fn ensure_hf_endpoint() {
+    if std::env::var("HF_ENDPOINT").map(|v| v.is_empty()).unwrap_or(true) {
+        std::env::set_var("HF_ENDPOINT", "https://huggingface.co");
+    }
+}
+
 /// In-process vector index using `fastembed` (BGESmallENV15) and embedded `LanceDB`.
 pub struct SpagyricIndex {
     model: Arc<Mutex<TextEmbedding>>,
@@ -45,6 +51,7 @@ impl SpagyricIndex {
             .await
             .map_err(|e| RagError::Database(e.to_string()))?;
 
+        ensure_hf_endpoint();
         let options = InitOptions {
             model_name: EmbeddingModel::BGESmallENV15,
             show_download_progress: false,
@@ -74,6 +81,7 @@ impl SpagyricIndex {
             .await
             .map_err(|e| RagError::Database(e.to_string()))?;
 
+        ensure_hf_endpoint();
         let options = InitOptions {
             model_name: EmbeddingModel::BGESmallENV15,
             show_download_progress: false,

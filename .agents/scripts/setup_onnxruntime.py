@@ -92,6 +92,7 @@ def setup_onnxruntime():
     if github_env:
         with open(github_env, "a", encoding="utf-8") as f:
             f.write(f"ORT_DYLIB_PATH={lib_path}\n")
+            f.write("HF_ENDPOINT=https://huggingface.co\n")
             if plat.startswith("linux"):
                 f.write(f"LD_LIBRARY_PATH={lib_dir}:{os.environ.get('LD_LIBRARY_PATH', '')}\n")
             elif plat == "darwin":
