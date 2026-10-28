@@ -37,6 +37,12 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Patch Dependencies
+        shell: bash
+        run: |
+          cargo fetch
+          python3 .agents/scripts/patch_dependencies.py || python .agents/scripts/patch_dependencies.py
+
       - name: Check Workspace
         run: cargo check --workspace --all-targets
 
@@ -62,6 +68,12 @@ jobs:
 
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
+
+      - name: Patch Dependencies
+        shell: bash
+        run: |
+          cargo fetch
+          python3 .agents/scripts/patch_dependencies.py || python .agents/scripts/patch_dependencies.py
 
       - name: Check Formatting
         run: cargo fmt --all -- --check
